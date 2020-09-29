@@ -1,6 +1,7 @@
-package DomainClasses;
+package domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Use class for user's info & Tweets list.
 public class Spitter {
@@ -12,7 +13,7 @@ public class Spitter {
         private String firstName;
         private String lastName;
         // User's Tweets list.
-        private ArrayList<Spittle> spittleList = new ArrayList<>();
+        private List<Spittle> spittleList = new ArrayList<>();
         private String description;
 
         public Spitter(String username, String password, String email, String firstName, String lastName, String description) {
@@ -90,7 +91,7 @@ public class Spitter {
             return lastName;
         }
 
-        public ArrayList<Spittle> getSpittleList() {
+        public List<Spittle> getSpittleList() {
             return spittleList;
         }
 

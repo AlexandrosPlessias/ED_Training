@@ -1,4 +1,4 @@
-package DomainClasses;
+package domain;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ public class Spittle {
 
     private final Long id;
     private final String message;
-    private final Date time;
+    private final Date time; // calendar date
     private Double latitude;
     private Double longitude;
 
