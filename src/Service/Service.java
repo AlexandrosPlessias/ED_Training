@@ -1,84 +1,25 @@
 package Service;
 
-import DAO.DAO;
 import DomainClasses.Spitter;
 import DomainClasses.Spittle;
-
 import java.util.Date;
 
-/**
- * Here will implemented the CRUD methods for Spittle
- *  and Spittle.
- */
-public class Service {
+public interface Service {
 
-    // used for Singleton Pattern.
-    private static Service singleton = new Service( );
+    // Create methods.
+    public Spitter create(String username, String password, String email, String firstName, String lastName, String description);
+    public Spittle create(String message, Date date, Double latitude, Double longitude);
 
-    /* A private Constructor prevents any other
-     * class from instantiating.
-     */
-    private Service() { }
+    // Read methods.
+    public void read(Spitter spitter);
+    public void read(Spittle spittle);
 
-    /* Static 'instance' method */
-    public static Service getInstance( ) {
-        return singleton;
-    }
+    // Update methods.
+    public Spitter update(Spitter spitter, String description);
+    public Spittle update(Spittle spittle, String message);
 
-    // Create methods
-    public Spitter createSpitter(String username, String password, String email, String firstName, String lastName, String description){
-        // Spitter sp = SpitterDAOImpl.Create(username, password, email, firstName, lastName,  description)
-        return null; // will be replaced.
-    }
-
-    public Spittle createSpittle(String message, Date date, Double latitude, Double longitude){
-        // Spittle sp = SpittleDAOImpl.Create (message, date, latitude, longitude)
-        return null; // will be replaced.
-    }
-
-
-
-    // read methods
-    public void readSpitter(Spitter spitter){
-        // data = call SpitterDAOImpl.read(spitter);
-        // System.out.println(data);
-    }
-
-    public void readSpittle(Spittle spittle){
-        // data =  SpittleDAOImpl.read(spitter);
-        // System.out.println(data);
-    }
-
-
-    // update methods
-    public Spitter updateSpitter(Spitter spitter, String description){ // what update?? description
-        // Spitter sp = SpitterDAOImpl.update(description);
-        // System.out.println("Updated successfully!");
-        return null;
-    }
-
-    public Spittle updateSpittle(Spittle spittle, String message){ // what update?? message
-        // Spittle sp = SpittleDAOImpl.update(message);
-        // System.out.println("Updated successfully!");
-        return null;
-    }
-
-
-    // delete methods.
-    public boolean deleteSpitter(Spitter spitter){
-        // SpitterDAOImpl.detele(spitter);
-
-        //if (element exist) {perform delete; System.out.println("{Element} deleted successfully!");}
-        // else System.err.println("Delete Fails!");
-        return true;
-    }
-
-    public boolean deleteSpittle(Spittle spittle){
-        // SpittleDAOImpl.detele(spittle);
-
-        //if (element exist) {perform delete; System.out.println("{Element} deleted successfully!");}
-        // else System.err.println("Delete Fails!");
-        return true;
-    }
+    // Delete methods.
+    public boolean delete(Spitter spitter);
+    public boolean delete(Spittle spittle);
 
 }
