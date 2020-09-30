@@ -22,8 +22,10 @@ public class main {
 
             testEra();
         } catch (SQLException e) {
+            System.err.print(e);
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            System.err.print(e);
             e.printStackTrace();
         }
 
@@ -38,9 +40,9 @@ public class main {
         //User's services check.
         Service userService = new SpitterServiceImpl();
         userService.create(tempUser);
-        userService.read(tempUser);
-        userService.update(tempUser, "The new updated description.");
-        userService.delete(tempUser);
+        //userService.read(tempUser);
+        //userService.update(tempUser, "The new updated description.");
+        //userService.delete(tempUser);
 
         DBConnection.getInstance().getConn().commit();
 
@@ -52,9 +54,9 @@ public class main {
         //Tweet's services check.
         Service tweetService = new SpittleServiceImpl();
         tweetService.create(tempTweet);
-        tweetService.read(tempTweet);
-        tweetService.update(tempTweet, "Hello new world");
-        tweetService.delete(tempTweet);
+        //tweetService.read(tempTweet);
+        //tweetService.update(tempTweet, "Hello new world");
+        //tweetService.delete(tempTweet);
 
         // Database closings.
         System.out.println("Statement closed...");

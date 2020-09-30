@@ -26,6 +26,8 @@ public class SpittleDAOImpl implements DAO{
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
         } catch (SQLException e){
+            System.err.print(e);
+            e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
@@ -64,6 +66,8 @@ public class SpittleDAOImpl implements DAO{
             }
             results.close();
         } catch (SQLException e){
+            System.err.print(e);
+            e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
@@ -89,6 +93,8 @@ public class SpittleDAOImpl implements DAO{
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
         } catch (SQLException e){
+            System.err.print(e);
+            e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
@@ -109,6 +115,8 @@ public class SpittleDAOImpl implements DAO{
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
         } catch (SQLException e){
+            System.err.print(e);
+            e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 

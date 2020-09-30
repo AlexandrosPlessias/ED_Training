@@ -27,6 +27,8 @@ public class SpitterDAOImpl implements DAO {
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
         } catch (SQLException e){
+            System.err.print(e);
+            e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
@@ -70,6 +72,8 @@ public class SpitterDAOImpl implements DAO {
             results.close();
 
         }catch (SQLException e){
+            System.err.print(e);
+            e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
@@ -95,6 +99,8 @@ public class SpitterDAOImpl implements DAO {
             DBConnection.getInstance().getConn().commit();
         }catch (SQLException e){
             DBConnection.getInstance().getConn().rollback();
+            System.err.print(e);
+            e.printStackTrace();
         }
 
         System.out.println("Spitter: "+sp.getUsername()+", Update desc to DB was Successfully");
@@ -115,6 +121,8 @@ public class SpitterDAOImpl implements DAO {
             DBConnection.getInstance().getConn().commit();
 
         }catch (SQLException e){
+            System.err.print(e);
+            e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
