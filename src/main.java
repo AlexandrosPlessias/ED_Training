@@ -12,16 +12,21 @@ import java.sql.Date;
 public class main {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
 
         try {
+            // Disable Autocommit SQL's switch from TRUE (individual SQL STATEMENT committed auto)
+            // to False for Education and Transaction pattern implementation (ACID aka ALL or NOTHING)
+            // statement1 -> statement2 -> statement3 commit together as ONE in the end?
+            DBConnection.getInstance().getConn().setAutoCommit(false);
 
             testEra();
-
-        } catch (SQLException | ClassNotFoundException throwable) {
-            System.err.println(throwable);
-            throwable.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
 
     }
 
@@ -36,6 +41,8 @@ public class main {
         userService.read(tempUser);
         userService.update(tempUser, "The new updated description.");
         userService.delete(tempUser);
+
+        DBConnection.getInstance().getConn().commit();
 
         System.out.println();
 
@@ -58,3 +65,9 @@ public class main {
     }
 
 }
+
+    /*[A]tomicity means either all successful or none.
+      [C]onsistency ensures bringing the database from one consistent state to another consistent state.
+      [I]solation ensures that transaction is isolated from other transaction.
+      [D]urability means once a transaction has been committed, it will remain so, even in the event of errors, power loss etc.
+     */

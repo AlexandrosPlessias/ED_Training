@@ -4,6 +4,7 @@ import domain.Spitter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Statement;
 
 public class SpitterDAOImpl implements DAO {
@@ -18,8 +19,16 @@ public class SpitterDAOImpl implements DAO {
                         "VALUES ('" +sp.getUsername()+"', '"+sp.getPassword()+"', '"+sp.getEmail()+"', '" +
                         sp.getFirstName()+"', '" +sp.getLastName()+"', '"+sp.getDescription()+"')";
 
-        Statement stmt = DBConnection.getInstance().getStmt();
-        stmt.executeUpdate(query);
+        try {
+            DBConnection.getInstance().getConn().setSavepoint("Before user create");
+            Statement stmt = DBConnection.getInstance().getStmt();
+            stmt.executeUpdate(query);
+
+            //Committing the transaction
+            DBConnection.getInstance().getConn().commit();
+        } catch (SQLException e){
+            DBConnection.getInstance().getConn().rollback();
+        }
 
         System.out.println("Spitter "+sp.getUsername()+", added to DB Successfully");
     }
@@ -32,28 +41,39 @@ public class SpitterDAOImpl implements DAO {
                         "FROM "+table_name+" " +
                         "WHERE username = '"+sp.getUsername()+"'";
 
-        Statement stmt = DBConnection.getInstance().getStmt();
-        ResultSet results = stmt.executeQuery(query);
+        try {
+            DBConnection.getInstance().getConn().setSavepoint("Before user read");
+            Statement stmt = DBConnection.getInstance().getStmt();
+            ResultSet results = stmt.executeQuery(query);
 
-        // STEP 5: Extract data from result set
-        while(results.next()){
-            //Retrieve by column name
-            String username  = results.getString("username");
-            String password = results.getString("password");
-            String email = results.getString("email");
-            String fname = results.getString("firstName");
-            String lname = results.getString("lastName");
-            String desc = results.getString("description");
+            //Committing the transaction
+            DBConnection.getInstance().getConn().commit();
 
-            //Display values
-            System.out.print("user: " + username);
-            System.out.print(", password: " + password);
-            System.out.print(", email: " + email);
-            System.out.print(", fname: " + fname);
-            System.out.print(", lname: " + lname);
-            System.out.print(", desc: " + desc + "\n");
+            // STEP 5: Extract data from result set
+            while(results.next()){
+                //Retrieve by column name
+                String username  = results.getString("username");
+                String password = results.getString("password");
+                String email = results.getString("email");
+                String fname = results.getString("firstName");
+                String lname = results.getString("lastName");
+                String desc = results.getString("description");
+
+                //Display values
+                System.out.print("user: " + username);
+                System.out.print(", password: " + password);
+                System.out.print(", email: " + email);
+                System.out.print(", fname: " + fname);
+                System.out.print(", lname: " + lname);
+                System.out.print(", desc: " + desc + "\n");
+            }
+            results.close();
+
+        }catch (SQLException e){
+            DBConnection.getInstance().getConn().rollback();
         }
-        results.close();
+
+
 
         System.out.println("Spitter : "+sp.getUsername()+", read was Successfully from DB");
     }
@@ -66,8 +86,16 @@ public class SpitterDAOImpl implements DAO {
                         "SET description = '"+updateText+"' " +
                         "WHERE username = '" +sp.getUsername()+"'";
 
-        Statement stmt = DBConnection.getInstance().getStmt();
-        stmt.executeUpdate(query);
+        try{
+            DBConnection.getInstance().getConn().setSavepoint("Before user update");
+            Statement stmt = DBConnection.getInstance().getStmt();
+            stmt.executeUpdate(query);
+
+            //Committing the transaction
+            DBConnection.getInstance().getConn().commit();
+        }catch (SQLException e){
+            DBConnection.getInstance().getConn().rollback();
+        }
 
         System.out.println("Spitter: "+sp.getUsername()+", Update desc to DB was Successfully");
     }
@@ -78,8 +106,17 @@ public class SpitterDAOImpl implements DAO {
         Spitter sp = (Spitter) obj;
         String query = "DELETE FROM "+table_name+" WHERE username = '" +sp.getUsername()+"'";
 
-        Statement stmt = DBConnection.getInstance().getStmt();
-        stmt.executeUpdate(query);
+        try{
+            DBConnection.getInstance().getConn().setSavepoint("Before user delete");
+            Statement stmt = DBConnection.getInstance().getStmt();
+            stmt.executeUpdate(query);
+
+            //Committing the transaction
+            DBConnection.getInstance().getConn().commit();
+
+        }catch (SQLException e){
+            DBConnection.getInstance().getConn().rollback();
+        }
 
         System.out.println("Spitter: "+sp.getUsername()+", Deleted Successfully from DB");
     }

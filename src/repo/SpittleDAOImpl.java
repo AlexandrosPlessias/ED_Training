@@ -18,8 +18,16 @@ public class SpittleDAOImpl implements DAO{
                         "VALUES ('"+sptl.getMessage()+"','"+ sptl.getTime()+"','"+
                          sptl.getLatitude()+ "', '"+sptl.getLontitude()+"')";
 
-        Statement stmt = DBConnection.getInstance().getStmt();
-        stmt.executeUpdate(query);
+        try {
+            DBConnection.getInstance().getConn().setSavepoint("Before user create");
+            Statement stmt = DBConnection.getInstance().getStmt();
+            stmt.executeUpdate(query);
+
+            //Committing the transaction
+            DBConnection.getInstance().getConn().commit();
+        } catch (SQLException e){
+            DBConnection.getInstance().getConn().rollback();
+        }
 
         System.out.println("Spittle msg <"+sptl.getMessage()+">, added to DB Successfully");
     }
@@ -32,24 +40,32 @@ public class SpittleDAOImpl implements DAO{
                        "FROM "+table_name +
                        " WHERE message = '" +sptl.getMessage()+"'";
 
-        Statement stmt = DBConnection.getInstance().getStmt();
-        ResultSet results = stmt.executeQuery(query);
+        try {
+            DBConnection.getInstance().getConn().setSavepoint("Before user read");
+            Statement stmt = DBConnection.getInstance().getStmt();
+            ResultSet results = stmt.executeQuery(query);
 
-        // STEP 5: Extract data from result set
-        while(results.next()){
-            //Retrieve by column name
-            String message  = results.getString("message");
-            String time = results.getString("time");
-            String latitude = results.getString("latitude");
-            String longitude = results.getString("longitude");
+            //Committing the transaction
+            DBConnection.getInstance().getConn().commit();
 
-            //Display values
-            System.out.print("message: " + message);
-            System.out.print(", time: " + time);
-            System.out.print(", latitude: " + latitude);
-            System.out.print(", longitude: " + longitude + "\n");
+            // STEP 5: Extract data from result set
+            while (results.next()) {
+                //Retrieve by column name
+                String message = results.getString("message");
+                String time = results.getString("time");
+                String latitude = results.getString("latitude");
+                String longitude = results.getString("longitude");
+
+                //Display values
+                System.out.print("message: " + message);
+                System.out.print(", time: " + time);
+                System.out.print(", latitude: " + latitude);
+                System.out.print(", longitude: " + longitude + "\n");
+            }
+            results.close();
+        } catch (SQLException e){
+            DBConnection.getInstance().getConn().rollback();
         }
-        results.close();
 
         System.out.println("Spittle msg <"+sptl.getMessage()+">, read was Successfully from DB");
     }
@@ -64,8 +80,17 @@ public class SpittleDAOImpl implements DAO{
 
         //Update Obj
         sptl.setMessage(updateText);
-        Statement stmt = DBConnection.getInstance().getStmt();
-        stmt.executeUpdate(query);
+
+        try {
+            DBConnection.getInstance().getConn().setSavepoint("Before user update");
+            Statement stmt = DBConnection.getInstance().getStmt();
+            stmt.executeUpdate(query);
+
+            //Committing the transaction
+            DBConnection.getInstance().getConn().commit();
+        } catch (SQLException e){
+            DBConnection.getInstance().getConn().rollback();
+        }
 
         System.out.println("Spittle msg <"+sptl.getMessage()+">, Update to DB was Successfully");
     }
@@ -76,9 +101,16 @@ public class SpittleDAOImpl implements DAO{
         Spittle sptl = (Spittle) obj;
         String query = "DELETE FROM " + table_name +
                        " WHERE message = '" + sptl.getMessage() + "'";
+        try {
+            DBConnection.getInstance().getConn().setSavepoint("Before user delete");
+            Statement stmt = DBConnection.getInstance().getStmt();
+            stmt.executeUpdate(query);
 
-        Statement stmt = DBConnection.getInstance().getStmt();
-        stmt.executeUpdate(query);
+            //Committing the transaction
+            DBConnection.getInstance().getConn().commit();
+        } catch (SQLException e){
+            DBConnection.getInstance().getConn().rollback();
+        }
 
         System.out.println("Spittle msg <"+sptl.getMessage()+">, Deleted Successfully from DB");
     }
