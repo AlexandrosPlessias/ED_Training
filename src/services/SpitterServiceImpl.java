@@ -1,12 +1,13 @@
 package services;
 
 
+import domain.Spitter;
 import repo.DAO;
 import repo.SpitterDAOImpl;
-
 import java.sql.SQLException;
 
-public class SpitterServiceImpl implements Service {
+// Genetic became from <T> to Spitter.
+public class SpitterServiceImpl implements Service<Spitter> {
 
     private DAO spitterDAO ;
 
@@ -14,24 +15,37 @@ public class SpitterServiceImpl implements Service {
         this.spitterDAO = new SpitterDAOImpl();
     }
 
+
     @Override
-    public void create(Object obj) throws SQLException, ClassNotFoundException {
-        spitterDAO.create(obj);
+    public void create(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
+        // Not null check
+         if (!spitter.checkNull()){
+             spitterDAO.create(spitter);
+         }
     }
 
     @Override
-    public void read(Object obj) throws SQLException, ClassNotFoundException {
-        spitterDAO.read(obj);
+    public void read(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
+        // Not null check
+        if (!spitter.checkNull()) {
+            spitterDAO.read(spitter);
+        }
     }
 
     @Override
-    public void update(Object obj, String updateText) throws SQLException, ClassNotFoundException {
-        spitterDAO.update(obj, updateText);
+    public void update(Spitter spitter, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException {
+        // Not null check
+        if (!spitter.checkNull()) {
+            spitterDAO.update(spitter, updateText);
+        }
     }
 
     @Override
-    public void delete(Object obj) throws SQLException, ClassNotFoundException {
-        spitterDAO.delete(obj);
-
+    public void delete(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
+        // Not null check
+        if (!spitter.checkNull()) {
+            spitterDAO.delete(spitter);
+        }
     }
+
 }

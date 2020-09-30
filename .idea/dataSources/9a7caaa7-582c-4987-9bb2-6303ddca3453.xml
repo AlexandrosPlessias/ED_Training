@@ -916,7 +916,6 @@ SELECT|sys.sys_config:null
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="288" parent="285" name="username">
       <Position>2</Position>
@@ -957,7 +956,6 @@ SELECT|sys.sys_config:null
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="296" parent="286" name="message">
       <Position>2</Position>

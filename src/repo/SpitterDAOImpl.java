@@ -7,20 +7,20 @@ import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
 
-public class SpitterDAOImpl implements DAO {
+// public void insert(Spittle spittle)
+
+public class SpitterDAOImpl implements DAO<Spitter> {
 
     private final String table_name = "spitter";
 
     @Override
-    public void create(Object obj) throws SQLException, ClassNotFoundException {
+    public void create(Spitter sp) throws SQLException, ClassNotFoundException {
 
-        Spitter sp = (Spitter) obj;
-        String query = "INSERT INTO "+table_name+" (username, password, email, firstname, lastname, description) " +
-                        "VALUES ('" +sp.getUsername()+"', '"+sp.getPassword()+"', '"+sp.getEmail()+"', '" +
+        String query = "INSERT INTO "+table_name+" (idSpitter, username, password, email, firstname, lastname, description) " +
+                        "VALUES ( '"+sp.getId()+"', '" +sp.getUsername()+"', '"+sp.getPassword()+"', '"+sp.getEmail()+"', '" +
                         sp.getFirstName()+"', '" +sp.getLastName()+"', '"+sp.getDescription()+"')";
 
-        try {
-            DBConnection.getInstance().getConn().setSavepoint("Before user create");
+        try{
             Statement stmt = DBConnection.getInstance().getStmt();
             stmt.executeUpdate(query);
 
@@ -36,15 +36,13 @@ public class SpitterDAOImpl implements DAO {
     }
 
     @Override
-    public void read(Object obj) throws SQLException, ClassNotFoundException {
+    public void read(Spitter sp) throws SQLException, ClassNotFoundException {
 
-        Spitter sp = (Spitter) obj;
         String query = "SELECT * " +
                         "FROM "+table_name+" " +
                         "WHERE username = '"+sp.getUsername()+"'";
 
         try {
-            DBConnection.getInstance().getConn().setSavepoint("Before user read");
             Statement stmt = DBConnection.getInstance().getStmt();
             ResultSet results = stmt.executeQuery(query);
 
@@ -54,6 +52,7 @@ public class SpitterDAOImpl implements DAO {
             // STEP 5: Extract data from result set
             while(results.next()){
                 //Retrieve by column name
+                int id = results.getInt("idSpitter");
                 String username  = results.getString("username");
                 String password = results.getString("password");
                 String email = results.getString("email");
@@ -62,7 +61,8 @@ public class SpitterDAOImpl implements DAO {
                 String desc = results.getString("description");
 
                 //Display values
-                System.out.print("user: " + username);
+                System.out.print("id: " + id);
+                System.out.print(", user: " + username);
                 System.out.print(", password: " + password);
                 System.out.print(", email: " + email);
                 System.out.print(", fname: " + fname);
@@ -83,15 +83,13 @@ public class SpitterDAOImpl implements DAO {
     }
 
     @Override
-    public void update(Object obj, String updateText) throws SQLException, ClassNotFoundException {
+    public void update(Spitter sp, String updateText) throws SQLException, ClassNotFoundException {
 
-        Spitter sp = (Spitter) obj;
         String query = "UPDATE "+table_name+" " +
                         "SET description = '"+updateText+"' " +
-                        "WHERE username = '" +sp.getUsername()+"'";
+                        "WHERE idSpitter = '" +sp.getId()+"'";
 
         try{
-            DBConnection.getInstance().getConn().setSavepoint("Before user update");
             Statement stmt = DBConnection.getInstance().getStmt();
             stmt.executeUpdate(query);
 
@@ -107,13 +105,11 @@ public class SpitterDAOImpl implements DAO {
     }
 
     @Override
-    public void delete(Object obj) throws SQLException, ClassNotFoundException {
+    public void delete(Spitter sp) throws SQLException, ClassNotFoundException {
 
-        Spitter sp = (Spitter) obj;
-        String query = "DELETE FROM "+table_name+" WHERE username = '" +sp.getUsername()+"'";
+        String query = "DELETE FROM "+table_name+" WHERE idSpitter = '" +sp.getId()+"'";
 
         try{
-            DBConnection.getInstance().getConn().setSavepoint("Before user delete");
             Statement stmt = DBConnection.getInstance().getStmt();
             stmt.executeUpdate(query);
 

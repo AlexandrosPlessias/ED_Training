@@ -1,11 +1,12 @@
 package services;
 
+import domain.Spittle;
 import repo.DAO;
 import repo.SpittleDAOImpl;
 
 import java.sql.SQLException;
 
-public class SpittleServiceImpl implements Service{
+public class SpittleServiceImpl implements Service<Spittle>{
 
     private DAO spittleDAO;
 
@@ -14,23 +15,35 @@ public class SpittleServiceImpl implements Service{
     }
 
     @Override
-    public void create(Object obj) throws SQLException, ClassNotFoundException {
-        this.spittleDAO.create(obj);
+    public void create(Spittle spittle) throws SQLException, ClassNotFoundException, IllegalAccessException {
+        // Not null check
+        if (!spittle.checkNull()) {
+            this.spittleDAO.create(spittle);
+        }
     }
 
     @Override
-    public void read(Object obj) throws SQLException, ClassNotFoundException {
-        this.spittleDAO.read(obj);
+    public void read(Spittle spittle) throws SQLException, ClassNotFoundException, IllegalAccessException {
+        // Not null check
+        if (!spittle.checkNull()) {
+            this.spittleDAO.read(spittle);
+        }
     }
 
     @Override
-    public void update(Object obj, String updateText) throws SQLException, ClassNotFoundException {
-        this.spittleDAO.update(obj, updateText);
+    public void update(Spittle spittle, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException {
+        // Not null check
+        if (!spittle.checkNull()) {
+            this.spittleDAO.update(spittle, updateText);
+        }
     }
 
     @Override
-    public void delete(Object obj) throws SQLException, ClassNotFoundException {
-        this.spittleDAO.delete(obj);
+    public void delete(Spittle spittle) throws SQLException, ClassNotFoundException, IllegalAccessException {
+        // Not null check
+        if (!spittle.checkNull()) {
+            this.spittleDAO.delete(spittle);
+        }
 
     }
 }

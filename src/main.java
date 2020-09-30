@@ -21,10 +21,14 @@ public class main {
             DBConnection.getInstance().getConn().setAutoCommit(false);
 
             testEra();
+
         } catch (SQLException e) {
             System.err.print(e);
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            System.err.print(e);
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             System.err.print(e);
             e.printStackTrace();
         }
@@ -32,15 +36,22 @@ public class main {
 
     }
 
+    //TODO:
+    // generics used removed Object----> [OK]
+    // service check not Null  ---> [OK]
+    // commit rollback ---> [OK]
+    // db relation by ids ???? ask... (logika id manipulate by domain & tweet add owner.)
 
-    public static void testEra() throws SQLException, ClassNotFoundException {
+
+    public static void testEra() throws SQLException, ClassNotFoundException, IllegalAccessException {
 
         // User creation.
-        Spitter tempUser = new Spitter("Nikos_mvp","a&12345678", "mail@gmail.com", "Vasilis","NIkodimos","Hello f Splitter.");
+        Spitter tempUser = new Spitter(5, "Alexdas","a&12345678", "mail1@gmail.com", "Alex","fsd","Hello1 f Splitter.");
+
         //User's services check.
         Service userService = new SpitterServiceImpl();
         userService.create(tempUser);
-        //userService.read(tempUser);
+        userService.read(tempUser);
         //userService.update(tempUser, "The new updated description.");
         //userService.delete(tempUser);
 
@@ -50,11 +61,11 @@ public class main {
 
         // Tweet creation with date.
         Date date=Date.valueOf("2020-05-09");
-        Spittle tempTweet = new Spittle("Hellos world 1",date,123456.0000,654321.0000);
+        Spittle tempTweet = new Spittle(5, "Hellos world 1",date,123456.0000,654321.0000);
         //Tweet's services check.
         Service tweetService = new SpittleServiceImpl();
         tweetService.create(tempTweet);
-        //tweetService.read(tempTweet);
+        tweetService.read(tempTweet);
         //tweetService.update(tempTweet, "Hello new world");
         //tweetService.delete(tempTweet);
 

@@ -1,18 +1,28 @@
 package domain;
 
+import java.lang.reflect.Field;
 import java.sql.Date;
 
 // Tweet msg data & loc & timestamp.
 public class Spittle {
 
-    private final Long id;
+    private static int count = 0;
+    private final int id;
     private String message;
     private final Date time; // calendar date
     private Double latitude;
     private Double longitude;
 
+    public Spittle(int id, String message, Date date, Double latitude, Double longitude) {
+        this.id = id;
+        this.message = message;
+        this.time = date;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Spittle(String message, Date date, Double latitude, Double longitude) {
-        this.id = null;
+        this.id = count++;
         this.message = message;
         this.time = date;
         this.latitude = latitude;
@@ -21,7 +31,7 @@ public class Spittle {
 
 
     // Getters
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -44,5 +54,13 @@ public class Spittle {
     // Setter
     public void setMessage (String newMessage){
         this.message = newMessage;
+    }
+
+    // Class for NULL Checking...
+    public boolean checkNull() throws IllegalAccessException {
+        for (Field f : getClass().getDeclaredFields())
+            if (f.get(this) != null)
+                return false;
+        return true;
     }
 }
