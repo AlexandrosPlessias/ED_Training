@@ -1,9 +1,12 @@
-package services;
+package repo;
 
 import java.sql.DriverManager;
 import java.sql.*;
 
-public class QueryExecuter {
+public class DBConnection {
+
+    // Singleton declare.
+    private static DBConnection dbConnection;
 
     // JDBC driver name and database URL
     static final String  JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -16,7 +19,8 @@ public class QueryExecuter {
     Connection conn = null;
     Statement stmt = null;
 
-    public QueryExecuter() throws SQLException,ClassNotFoundException {
+    //private constructor.
+    private DBConnection() throws SQLException,ClassNotFoundException {
         // STEP 2: Register JDBC driver
         Class.forName(JDBC_DRIVER);
 
@@ -29,12 +33,21 @@ public class QueryExecuter {
         stmt = conn.createStatement();
     }
 
+    public static DBConnection getInstance() throws SQLException, ClassNotFoundException {
+        if (dbConnection == null){ //if there is no instance available... create new one
+            dbConnection = new DBConnection();
+        }
+
+        return dbConnection;
+    }
+
+    // Get statement for requests and closing.
     public Statement getStmt() {
         return stmt;
     }
 
-    public void closing() throws SQLException {
-        stmt.close();
-        conn.close();
-    }
+    // Get connection for closing.
+    public Connection getConn() {return conn;}
+
+
 }

@@ -1,7 +1,6 @@
 package repo;
 
 import domain.Spitter;
-import services.QueryExecuter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,41 +9,30 @@ import java.sql.Statement;
 public class SpitterDAOImpl implements DAO {
 
     private final String table_name = "spitter";
-    private QueryExecuter queryExecuter;
-
-    {
-        try {
-            queryExecuter = new QueryExecuter();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
-    public void create(Object obj) throws SQLException {
+    public void create(Object obj) throws SQLException, ClassNotFoundException {
 
-        // error with space & @ etc.
         Spitter sp = (Spitter) obj;
-        String query = "INSERT INTO "+table_name+" (username, password, email, firstname, lastname, description) VALUES ('"
-                        +sp.getUsername()+"', '"+sp.getPassword()+"', '"+sp.getEmail()+"', '"+sp.getFirstName()+"', '"
-                        +sp.getLastName()+"', '"+sp.getDescription()+"')";
+        String query = "INSERT INTO "+table_name+" (username, password, email, firstname, lastname, description) " +
+                        "VALUES ('" +sp.getUsername()+"', '"+sp.getPassword()+"', '"+sp.getEmail()+"', '" +
+                        sp.getFirstName()+"', '" +sp.getLastName()+"', '"+sp.getDescription()+"')";
 
-        Statement stmt = queryExecuter.getStmt();
+        Statement stmt = DBConnection.getInstance().getStmt();
         stmt.executeUpdate(query);
 
-        System.out.println("Spitter entry added to DB Successfully");
+        System.out.println("Spitter "+sp.getUsername()+", added to DB Successfully");
     }
 
     @Override
-    public void read(Object obj) throws SQLException {
+    public void read(Object obj) throws SQLException, ClassNotFoundException {
 
         Spitter sp = (Spitter) obj;
-        String query = "SELECT * FROM "+table_name+" WHERE username = '"+sp.getUsername()+"'";
+        String query = "SELECT * " +
+                        "FROM "+table_name+" " +
+                        "WHERE username = '"+sp.getUsername()+"'";
 
-        Statement stmt = queryExecuter.getStmt();
+        Statement stmt = DBConnection.getInstance().getStmt();
         ResultSet results = stmt.executeQuery(query);
 
         // STEP 5: Extract data from result set
@@ -67,28 +55,32 @@ public class SpitterDAOImpl implements DAO {
         }
         results.close();
 
-        System.out.println("Spitter entry read was Successfully from DB");
+        System.out.println("Spitter : "+sp.getUsername()+", read was Successfully from DB");
     }
 
     @Override
-    public void update(Object obj, String updateText) {
+    public void update(Object obj, String updateText) throws SQLException, ClassNotFoundException {
 
         Spitter sp = (Spitter) obj;
-        String query = "UPDATE "+table_name+" SET descrition = "+updateText+" WHERE username = " +sp.getUsername();
+        String query = "UPDATE "+table_name+" " +
+                        "SET description = '"+updateText+"' " +
+                        "WHERE username = '" +sp.getUsername()+"'";
 
-        // execute query.
+        Statement stmt = DBConnection.getInstance().getStmt();
+        stmt.executeUpdate(query);
 
-        System.out.println("Spitter entry Update to DB was Successfully");
+        System.out.println("Spitter: "+sp.getUsername()+", Update desc to DB was Successfully");
     }
 
     @Override
-    public void delete(Object obj) {
+    public void delete(Object obj) throws SQLException, ClassNotFoundException {
 
         Spitter sp = (Spitter) obj;
-        String query = "DELETE FROM "+table_name+" WHERE username = " +sp.getUsername();
+        String query = "DELETE FROM "+table_name+" WHERE username = '" +sp.getUsername()+"'";
 
-        // execute query.
+        Statement stmt = DBConnection.getInstance().getStmt();
+        stmt.executeUpdate(query);
 
-        System.out.println("Spitter entry Deleted Successfully from DB");
+        System.out.println("Spitter: "+sp.getUsername()+", Deleted Successfully from DB");
     }
 }

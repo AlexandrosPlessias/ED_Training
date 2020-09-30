@@ -1,12 +1,12 @@
 package domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 // Tweet msg data & loc & timestamp.
 public class Spittle {
 
     private final Long id;
-    private final String message;
+    private String message;
     private final Date time; // calendar date
     private Double latitude;
     private Double longitude;
@@ -41,4 +41,8 @@ public class Spittle {
         return longitude;
     }
 
+    // Setter
+    public void setMessage (String newMessage){
+        this.message = newMessage;
+    }
 }

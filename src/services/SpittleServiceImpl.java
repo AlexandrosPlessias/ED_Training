@@ -5,31 +5,32 @@ import repo.SpittleDAOImpl;
 
 import java.sql.SQLException;
 
-// DAO CREATE HERE STO CONSTRATUR.
 public class SpittleServiceImpl implements Service{
 
-    @Override
-    public void create(Object obj) throws SQLException {
-        DAO spittleDAO = new SpittleDAOImpl();
-        spittleDAO.create(obj);
+    private DAO spittleDAO;
+
+    public SpittleServiceImpl() {
+        this.spittleDAO = new SpittleDAOImpl();
     }
 
     @Override
-    public void read(Object obj) throws SQLException {
-        DAO spittleDAO = new SpittleDAOImpl();
-        spittleDAO.read(obj);
+    public void create(Object obj) throws SQLException, ClassNotFoundException {
+        this.spittleDAO.create(obj);
     }
 
     @Override
-    public void update(Object obj, String upadateText) {
-        DAO spittleDAO = new SpittleDAOImpl();
-        spittleDAO.update(obj, upadateText);
+    public void read(Object obj) throws SQLException, ClassNotFoundException {
+        this.spittleDAO.read(obj);
     }
 
     @Override
-    public void delete(Object obj) {
-        DAO spittleDAO = new SpittleDAOImpl();
-        spittleDAO.delete(obj);
+    public void update(Object obj, String updateText) throws SQLException, ClassNotFoundException {
+        this.spittleDAO.update(obj, updateText);
+    }
+
+    @Override
+    public void delete(Object obj) throws SQLException, ClassNotFoundException {
+        this.spittleDAO.delete(obj);
 
     }
 }
