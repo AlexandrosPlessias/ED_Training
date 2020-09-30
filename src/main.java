@@ -47,7 +47,7 @@ public class main {
     public static void testEra() throws SQLException, ClassNotFoundException, IllegalAccessException {
 
         // User creation.
-        Spitter tempUser = new Spitter(5, "Alexdas","a&12345678", "mail1@gmail.com", "Alex","fsd","Hello1 f Splitter.");
+        Spitter tempUser = new Spitter(8, "Alexdddas","a&12da345678", "maisl1@gmail.com", "Alex","fsd","Hello1 f Splitter.");
 
         //User's services check.
         Service userService = new SpitterServiceImpl();
@@ -59,8 +59,8 @@ public class main {
         System.out.println();
 
         // Tweet creation with date.
-        Date date=Date.valueOf("2020-05-09");
-        Spittle tempTweet = new Spittle(5, "Hellos world 1",date,123456.0000,654321.0000);
+        Date date=Date.valueOf("2020-09-30");
+        Spittle tempTweet = new Spittle(8, "Hellos world 176",date,156456.0534,654321.0897);
         //Tweet's services check.
         Service tweetService = new SpittleServiceImpl();
         tweetService.create(tempTweet);

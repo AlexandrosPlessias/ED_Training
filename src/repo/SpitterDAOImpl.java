@@ -40,7 +40,7 @@ public class SpitterDAOImpl implements DAO<Spitter> {
 
         String query = "SELECT * " +
                         "FROM "+table_name+" " +
-                        "WHERE username = '"+sp.getUsername()+"'";
+                        "WHERE idSpitter = '"+sp.getId()+"'";
 
         try {
             Statement stmt = DBConnection.getInstance().getStmt();
