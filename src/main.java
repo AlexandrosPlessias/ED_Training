@@ -11,6 +11,11 @@ import java.sql.Date;
 
 public class main {
 
+    //TODO:
+    // generics used removed Object----> [OK]
+    // service check not Null  ---> [OK]
+    // commit rollback ---> [OK]
+    // db relation by ids ???? ask... (logika id manipulate by domain & tweet add owner.)
 
     public static void main(String[] args)  {
 
@@ -21,6 +26,8 @@ public class main {
             DBConnection.getInstance().getConn().setAutoCommit(false);
 
             testEra();
+
+            DBConnection.getInstance().closeAll();
 
         } catch (SQLException e) {
             System.err.print(e);
@@ -36,12 +43,6 @@ public class main {
 
     }
 
-    //TODO:
-    // generics used removed Object----> [OK]
-    // service check not Null  ---> [OK]
-    // commit rollback ---> [OK]
-    // db relation by ids ???? ask... (logika id manipulate by domain & tweet add owner.)
-
 
     public static void testEra() throws SQLException, ClassNotFoundException, IllegalAccessException {
 
@@ -55,8 +56,6 @@ public class main {
         //userService.update(tempUser, "The new updated description.");
         //userService.delete(tempUser);
 
-        DBConnection.getInstance().getConn().commit();
-
         System.out.println();
 
         // Tweet creation with date.
@@ -68,12 +67,6 @@ public class main {
         tweetService.read(tempTweet);
         //tweetService.update(tempTweet, "Hello new world");
         //tweetService.delete(tempTweet);
-
-        // Database closings.
-        System.out.println("Statement closed...");
-        DBConnection.getInstance().getStmt().close();
-        System.out.println("Connection closed...");
-        DBConnection.getInstance().getConn().close();
 
     }
 

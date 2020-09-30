@@ -49,5 +49,13 @@ public class DBConnection {
     // Get connection for closing.
     public Connection getConn() {return conn;}
 
+    // Database closings.
+    public void closeAll() throws SQLException {
+        System.out.println("Statement closed...");
+        stmt.close();
+        System.out.println("Connection closed...");
+        conn.close();
+    }
+
 
 }
