@@ -2,7 +2,6 @@ package repo;
 
 import domain.Spittle;
 
-// dummy class not impl yet for Spittle.
 public class SpittleDAOImpl implements DAO{
 
     @Override

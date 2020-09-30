@@ -3,17 +3,19 @@ package services;
 import repo.DAO;
 import repo.SpittleDAOImpl;
 
-    // DAO CREATE HERE STO CONSTRATUR.
+import java.sql.SQLException;
+
+// DAO CREATE HERE STO CONSTRATUR.
 public class SpittleServiceImpl implements Service{
 
     @Override
-    public void create(Object obj) {
+    public void create(Object obj) throws SQLException {
         DAO spittleDAO = new SpittleDAOImpl();
         spittleDAO.create(obj);
     }
 
     @Override
-    public void read(Object obj) {
+    public void read(Object obj) throws SQLException {
         DAO spittleDAO = new SpittleDAOImpl();
         spittleDAO.read(obj);
     }

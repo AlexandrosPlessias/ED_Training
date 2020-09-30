@@ -4,16 +4,18 @@ package services;
 import repo.DAO;
 import repo.SpitterDAOImpl;
 
+import java.sql.SQLException;
+
 public class SpitterServiceImpl implements Service {
 
     @Override
-    public void create(Object obj) {
+    public void create(Object obj) throws SQLException {
         DAO spitterDAO = new SpitterDAOImpl();
         spitterDAO.create(obj);
     }
 
     @Override
-    public void read(Object obj) {
+    public void read(Object obj) throws SQLException {
         DAO spitterDAO = new SpitterDAOImpl();
         spitterDAO.read(obj);
     }

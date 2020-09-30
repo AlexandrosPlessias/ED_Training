@@ -1,30 +1,71 @@
 package repo;
 
 import domain.Spitter;
+import services.QueryExecuter;
 
-// dummy class not impl yet for Spitter.
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class SpitterDAOImpl implements DAO {
 
+    private final String table_name = "spitter";
+    private QueryExecuter queryExecuter;
+
+    {
+        try {
+            queryExecuter = new QueryExecuter();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
-    public void create(Object obj) {
+    public void create(Object obj) throws SQLException {
 
+        // error with space & @ etc.
         Spitter sp = (Spitter) obj;
-        String query = "INSERT INTO spitter (username, password, email, firstname, lastname, description) " +
-                       "VALUES ("+sp.getUsername()+","+sp.getPassword()+","+sp.getEmail()+","+sp.getFirstName()+"," +
-                                ","+sp.getLastName()+","+sp.getDescription()+")";
+        String query = "INSERT INTO "+table_name+" (username, password, email, firstname, lastname, description) VALUES ('"
+                        +sp.getUsername()+"', '"+sp.getPassword()+"', '"+sp.getEmail()+"', '"+sp.getFirstName()+"', '"
+                        +sp.getLastName()+"', '"+sp.getDescription()+"')";
 
-        // execute query.
+        Statement stmt = queryExecuter.getStmt();
+        stmt.executeUpdate(query);
 
         System.out.println("Spitter entry added to DB Successfully");
     }
 
     @Override
-    public void read(Object obj) {
+    public void read(Object obj) throws SQLException {
 
         Spitter sp = (Spitter) obj;
-        String query = "SELECT * FROM spitter WHERE idSpitter = " +sp.getId();
+        String query = "SELECT * FROM "+table_name+" WHERE username = '"+sp.getUsername()+"'";
 
-        // execute query.
+        Statement stmt = queryExecuter.getStmt();
+        ResultSet results = stmt.executeQuery(query);
+
+        // STEP 5: Extract data from result set
+        while(results.next()){
+            //Retrieve by column name
+            String username  = results.getString("username");
+            String password = results.getString("password");
+            String email = results.getString("email");
+            String fname = results.getString("firstName");
+            String lname = results.getString("lastName");
+            String desc = results.getString("description");
+
+            //Display values
+            System.out.print("user: " + username);
+            System.out.print(", password: " + password);
+            System.out.print(", email: " + email);
+            System.out.print(", fname: " + fname);
+            System.out.print(", lname: " + lname);
+            System.out.print(", desc: " + desc + "\n");
+        }
+        results.close();
 
         System.out.println("Spitter entry read was Successfully from DB");
     }
@@ -33,7 +74,7 @@ public class SpitterDAOImpl implements DAO {
     public void update(Object obj, String updateText) {
 
         Spitter sp = (Spitter) obj;
-        String query = "UPDATE spitter SET descrition = "+updateText+" WHERE idSpitter = " +sp.getId();
+        String query = "UPDATE "+table_name+" SET descrition = "+updateText+" WHERE username = " +sp.getUsername();
 
         // execute query.
 
@@ -44,7 +85,7 @@ public class SpitterDAOImpl implements DAO {
     public void delete(Object obj) {
 
         Spitter sp = (Spitter) obj;
-        String query = "DELETE FROM spitter WHERE idSpitter = " +sp.getId();
+        String query = "DELETE FROM "+table_name+" WHERE username = " +sp.getUsername();
 
         // execute query.
 

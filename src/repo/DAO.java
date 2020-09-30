@@ -1,11 +1,12 @@
 package repo;
 
+import java.sql.SQLException;
+
 // Data Access Object Pattern FOR Spitter.
-// dummy class not impl yet.
 public interface DAO {
 
-    void create(Object obj); // Perform DB Delete
-    void read(Object obj);  // Perform DB Delete
+    void create(Object obj) throws SQLException; // Perform DB Delete
+    void read(Object obj) throws SQLException;  // Perform DB Delete
     void update(Object obj, String updateText);    // Perform DB Delete
     void delete(Object obj);    // Perform DB Delete
 }
