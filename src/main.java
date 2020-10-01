@@ -1,6 +1,6 @@
 import domain.Spitter;
 import domain.Spittle;
-import repo.DBConnection;
+import persistence.DBConnection;
 import services.Service;
 import services.SpitterServiceImpl;
 import services.SpittleServiceImpl;

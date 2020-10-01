@@ -1,6 +1,5 @@
-package repo;
+package persistence;
 
-import domain.Spitter;
 import domain.Spittle;
 
 import java.sql.*;

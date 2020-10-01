@@ -1,4 +1,4 @@
-package repo;
+package persistence;
 
 import java.sql.DriverManager;
 import java.sql.*;

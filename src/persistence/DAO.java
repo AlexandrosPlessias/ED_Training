@@ -1,11 +1,12 @@
-package repo;
+package persistence;
 
 import java.sql.SQLException;
 
-// Data Access Object Pattern FOR Spitter.
-// DAO<T t>
-//SpittleDao implements DAO<Spittle>
-
+// The purpose of your application's persistence layer is to use a session (see Section 86.1.1, "Sessions")
+// at run time to associate mapping metadata (see Section 2.4.3.1, "Mapping Metadata") and a data source
+// (see Section 86.1.2, "Data Access") in order to create, read, update, and delete persistent objects
+// using the TopLink cache (see Section 86.1.3, "Cache"), queries and expressions (see Section 86.1.4,
+// "Queries and Expressions"), as well as transactions (see Section 86.1.5, "Transactions").
 
 
 public interface DAO<T> {

@@ -1,8 +1,8 @@
 package services;
 
 import domain.Spittle;
-import repo.DAO;
-import repo.SpittleDAOImpl;
+import persistence.DAO;
+import persistence.SpittleDAOImpl;
 
 import java.sql.SQLException;
 

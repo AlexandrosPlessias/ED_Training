@@ -2,8 +2,8 @@ package services;
 
 
 import domain.Spitter;
-import repo.DAO;
-import repo.SpitterDAOImpl;
+import persistence.DAO;
+import persistence.SpitterDAOImpl;
 import java.sql.SQLException;
 
 // Genetic became from <T> to Spitter.
