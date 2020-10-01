@@ -5,16 +5,19 @@ import java.sql.SQLException;
 // T stands for generic<T>
 public interface Service<T> {
 
-    // Create methods.
-    void create(T t) throws SQLException, ClassNotFoundException, IllegalAccessException;
+    // Create methods By T.
+    T create(T t) throws SQLException, ClassNotFoundException, IllegalAccessException;
 
-    // Read methods.
-    void read(T t) throws SQLException, ClassNotFoundException, IllegalAccessException;
+    // Read methods by ID.
+    T read(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException;
 
     // Update methods.
-    void update(T t, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException;
+    T update(Long id, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException;
 
-    // Delete methods.
-    void delete(T t) throws SQLException, ClassNotFoundException, IllegalAccessException;
+    // Delete methods by ID.
+    boolean delete(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException;
+
+    // Delete methods by T.
+    boolean delete(T t) throws SQLException, ClassNotFoundException, IllegalAccessException;
 
 }

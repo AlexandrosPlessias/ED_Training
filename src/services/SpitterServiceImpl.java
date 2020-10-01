@@ -17,35 +17,60 @@ public class SpitterServiceImpl implements Service<Spitter> {
 
 
     @Override
-    public void create(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public Spitter create(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
-         if (!spitter.checkNull()){
-             spitterDAO.create(spitter);
+         if (spitter != null){
+             return (Spitter) spitterDAO.create(spitter);
+         } else {
+             System.err.println("Service violation: Null object tried to created...");
+             return null;
          }
+
     }
 
     @Override
-    public void read(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public Spitter read(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
-        if (!spitter.checkNull()) {
-            spitterDAO.read(spitter);
+        if (id != null){
+            return (Spitter) spitterDAO.read(id);
+        } else {
+            System.err.println("Service violation: Null object tried to read...");
+            return null;
         }
     }
 
     @Override
-    public void update(Spitter spitter, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public Spitter update(Long id, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
-        if (!spitter.checkNull()) {
-            spitterDAO.update(spitter, updateText);
+        if (id != null && updateText != null) {
+            return (Spitter) spitterDAO.update(id, updateText);
+        } else {
+            System.err.println("Service violation: Null object or messsage tried to update a record...");
+            return null;
         }
     }
 
     @Override
-    public void delete(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public boolean delete(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
-        if (!spitter.checkNull()) {
-            spitterDAO.delete(spitter);
+        if (id != null) {
+            return spitterDAO.delete(id);
+        }else{
+            System.err.println("Service violation: Try to delete Null object...");
+            return false;
         }
     }
+
+    @Override
+    public boolean delete(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
+        // Not null check
+        if (!spitter.checkNull()) {
+            return spitterDAO.delete(spitter);
+        }else{
+            System.err.println("Service violation: Try to delete Null object...");
+            return false;
+        }
+    }
+
 
 }

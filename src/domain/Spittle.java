@@ -6,15 +6,19 @@ import java.sql.Date;
 // Tweet msg data & loc & timestamp.
 public class Spittle {
 
-    private static int count = 0;
-    private final int id;
-    private int ownerId;
+    private Long id;
     private String message;
-    private final Date time; // calendar date
+    private Date time;
     private Double latitude;
     private Double longitude;
+    private Long ownerId;
 
-    public Spittle(int id, String message, Date date, Double latitude, Double longitude, int ownerId) {
+    // Empty constructor.
+    public Spittle(){
+
+    }
+
+    public Spittle(Long id, String message, Date date, Double latitude, Double longitude, Long ownerId) {
         this.id = id;
         this.ownerId = ownerId;
         this.message = message;
@@ -23,8 +27,8 @@ public class Spittle {
         this.longitude = longitude;
     }
 
-    public Spittle(String message, Date date, Double latitude, Double longitude, int ownerId) {
-        this.id = count++;
+    public Spittle(String message, Date date, Double latitude, Double longitude, Long ownerId) {
+        this.id = null;
         this.message = message;
         this.time = date;
         this.latitude = latitude;
@@ -34,7 +38,7 @@ public class Spittle {
 
 
     // Getters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -54,13 +58,29 @@ public class Spittle {
         return longitude;
     }
 
-    public int getOwnerId() {
+    public Long getOwnerId() {
         return ownerId;
     }
 
     // Setter
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setMessage (String newMessage){
         this.message = newMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "Spittle{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", time=" + time +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", ownerId=" + ownerId +
+                '}';
     }
 
     // Class for NULL Checking...

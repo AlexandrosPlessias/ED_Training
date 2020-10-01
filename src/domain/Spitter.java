@@ -7,31 +7,22 @@ import java.util.List;
 // Use class for user's info & Tweets list.
 public class Spitter {
 
-
-        private static int count = 0;
-        private int id;
+        private Long id;
         private String username;
         private String password;
         private String email;
         private String firstName;
         private String lastName;
-        // User's Tweets list.
-        private List<Spittle> spittleList = new ArrayList<>();
+        private List<Spittle> spittleList = new ArrayList<>();     // User's Tweets list.
         private String description;
 
-    public Spitter(int id, String username, String password, String email, String firstName, String lastName, String description) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.spittleList = null;
-        this.description = description;
-    }
+        // Empty constructor.
+        public Spitter() {
+        }
 
-        public Spitter(String username, String password, String email, String firstName, String lastName, String description) {
-            this.id = count++;
+        // Full constructor.
+        public Spitter(Long id, String username, String password, String email, String firstName, String lastName, String description) {
+            this.id = id;
             this.username = username;
             this.password = password;
             this.email = email;
@@ -41,9 +32,22 @@ public class Spitter {
             this.description = description;
         }
 
+        // Without id constructor.
+        public Spitter(String username, String password, String email, String firstName, String lastName, String description) {
+            this.id = null;
+            this.username = username;
+            this.password = password;
+            this.email = email;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.spittleList = null;
+            this.description = description;
+
+        }
+
         // Setters
         // MUST BE UNIQUE.
-        public void setId(int id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
@@ -81,7 +85,7 @@ public class Spitter {
         }
 
         // Getters.
-        public int getId() {
+        public Long getId() {
             return id;
         }
 
@@ -112,6 +116,20 @@ public class Spitter {
         public String getDescription() {
             return description;
         }
+
+    @Override
+    public String toString() {
+        return "Spitter{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", spittleList=" + spittleList +
+                ", description='" + description + '\'' +
+                '}';
+    }
 
     // Class for NULL Checking...
         public boolean checkNull() throws IllegalAccessException {

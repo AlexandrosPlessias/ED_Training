@@ -1,11 +1,9 @@
 package repo;
 
+import domain.Spitter;
 import domain.Spittle;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.Statement;
+import java.sql.*;
 
 
 public class SpittleDAOImpl implements DAO<Spittle>{
@@ -13,11 +11,14 @@ public class SpittleDAOImpl implements DAO<Spittle>{
     private final String table_name = "spittle";
 
     @Override
-    public void create(Spittle sptl) throws SQLException, ClassNotFoundException {
+    public Spittle create(Spittle sptl) throws SQLException, ClassNotFoundException {
 
-        String query = "INSERT INTO "+table_name+" (idSpittle, message, time, latitude, longitude, idSpitter) " +
-                        "VALUES ('"+sptl.getId()+"', '"+sptl.getMessage()+"','"+ sptl.getTime()+"','"+
+        String query = "INSERT INTO "+table_name+" ( message, time, latitude, longitude, idSpitter) " +
+                        "VALUES ( '"+sptl.getMessage()+"','"+ sptl.getTime()+"','"+
                          sptl.getLatitude()+ "', '"+sptl.getLontitude()+"', '"+sptl.getOwnerId()+"')";
+
+        String keyQuery = "SELECT LAST_INSERT_ID()";
+
 
         try {
             Statement stmt = DBConnection.getInstance().getStmt();
@@ -25,25 +26,42 @@ public class SpittleDAOImpl implements DAO<Spittle>{
 
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
+
+            // Get last ID (the one just inserted).
+            Long id = null;
+            ResultSet results = stmt.executeQuery(keyQuery);
+
+            if (results.next()) {
+                id = Long.valueOf(results.getInt(1));
+            }
+
+            results.close();
+
+            // Update obj and return it.
+            sptl.setId(id);
+            System.out.println("Spittle with id:"+sptl.getId()+", added to DB Successfully");
+            return sptl;
+
         } catch ( SQLIntegrityConstraintViolationException e){
             System.err.println("Spittle already exists");
-            return;
+            return null ;
 
         } catch (SQLException e){
             System.err.print(e);
             e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
-
-        System.out.println("Spittle msg <"+sptl.getMessage()+">, added to DB Successfully");
+        return null;
     }
 
     @Override
-    public void read(Spittle sptl) throws SQLException, ClassNotFoundException {
+    public Spittle read(Long id) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT * " +
                        "FROM "+table_name +
-                       " WHERE idSpittle = '" +sptl.getId()+"'";
+                       " WHERE idSpittle = '" + id +"'";
+
+        Spittle spittle = null;
 
         try {
             Statement stmt = DBConnection.getInstance().getStmt();
@@ -54,74 +72,108 @@ public class SpittleDAOImpl implements DAO<Spittle>{
 
             // STEP 5: Extract data from result set
             while (results.next()) {
-                //Retrieve by column name
-                int id = results.getInt("idSpittle");
-                String message = results.getString("message");
-                String time = results.getString("time");
-                String latitude = results.getString("latitude");
-                String longitude = results.getString("longitude");
-                int ownerId = results.getInt("idSpitter");
 
-                //Display values
-                System.out.print("idSpittle: " + id);
-                System.out.print(", message: " + message);
-                System.out.print(", time: " + time);
-                System.out.print(", latitude: " + latitude);
-                System.out.print(", latitude: " + latitude);
-                System.out.print(", idSpitter: " + ownerId + "\n");
+                //Retrieve by column name
+                Long idSpittle = results.getLong("idSpittle");
+                String message = results.getString("message");
+                Date time = results.getDate("time");
+                Double latitude = results.getDouble("latitude");
+                Double longitude = results.getDouble("longitude");
+                Long ownerId = results.getLong("idSpitter");
+
+                spittle = new Spittle(idSpittle,message,time,latitude,longitude, idSpittle);
             }
+
             results.close();
+
         } catch (SQLException e){
             System.err.print(e);
             e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
+            return null;
         }
 
-        System.out.println("Spittle msg <"+sptl.getMessage()+">, read was Successfully from DB");
+        if (spittle == null){
+            System.err.println("Spittle  with id:"+ id +", don't exist in our DB.");
+        } else {
+            System.out.println("Spittle with id:"+ id +", read was Successfully from DB");
+        }
+        return spittle;
     }
 
     @Override
-    public void update(Spittle sptl, String updateText) throws SQLException, ClassNotFoundException {
+    public Spittle update(Long id, String updateText) throws SQLException, ClassNotFoundException {
+
+        // Check if exists first.
+        if (read(id)==null){
+            return null;
+        }
 
         String query = "UPDATE " + table_name +
                        " SET message = '"+ updateText +
-                       "' WHERE idSpittle = '" + sptl.getId() +"'";
+                       "' WHERE idSpittle = '" + id +"'";
 
-        //Update Obj
-        sptl.setMessage(updateText);
-
-        try {
+        try{
             Statement stmt = DBConnection.getInstance().getStmt();
             stmt.executeUpdate(query);
 
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
+
         } catch (SQLException e){
             System.err.print(e);
             e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
-        System.out.println("Spittle msg <"+sptl.getMessage()+">, Update to DB was Successfully");
+        System.out.println("Spittle with id:"+id+", Update to DB was Successfully");
+        return read(id);
     }
 
     @Override
-    public void delete(Spittle sptl) throws SQLException, ClassNotFoundException {
+    public boolean delete(Long id) throws SQLException, ClassNotFoundException {
+
+        // Check if exists first.
+        if (read(id)==null){
+            return false;
+        }
+
 
         String query = "DELETE FROM " + table_name +
-                       " WHERE idSpittle = '" + sptl.getId() + "'";
+                " WHERE idSpittle = '" + id + "'";
+
+        boolean delete = false;
+
         try {
             Statement stmt = DBConnection.getInstance().getStmt();
             stmt.executeUpdate(query);
 
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
+
+            // flag updated.
+            delete = true;
+
         } catch (SQLException e){
             System.err.print(e);
             e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
-        System.out.println("Spittle msg <"+sptl.getMessage()+">, Deleted Successfully from DB");
+        if (delete) {
+            System.out.println("Spittle with id:"+id+", Deleted Successfully from DB");
+        } else {
+            System.err.println("Spittle with id:" + id + ", don't exist in our DB");
+
+        }
+
+        return delete;
+    }
+
+    @Override
+    public boolean delete(Spittle sptl) throws SQLException, ClassNotFoundException {
+
+        return delete(sptl.getId());
+
     }
 }

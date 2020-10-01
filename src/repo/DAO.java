@@ -10,10 +10,11 @@ import java.sql.SQLException;
 
 public interface DAO<T> {
 
-    void create(T t) throws SQLException, ClassNotFoundException; // Perform DB Delete
-    void read(T t) throws SQLException, ClassNotFoundException;  // Perform DB Delete
-    void update(T t, String updateText) throws SQLException, ClassNotFoundException;    // Perform DB Delete
-    void delete(T t) throws SQLException, ClassNotFoundException;    // Perform DB Delete
+    T create(T t) throws SQLException, ClassNotFoundException; // Perform DB Delete
+    T read(Long id) throws SQLException, ClassNotFoundException;  // Perform DB Delete
+    T update(Long id, String updateText) throws SQLException, ClassNotFoundException;    // Perform DB Delete
+    boolean delete(Long id) throws SQLException, ClassNotFoundException;    // Perform DB Delete
+    boolean delete(T t) throws SQLException, ClassNotFoundException;    // Perform DB Delete
 }
 
 

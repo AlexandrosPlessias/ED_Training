@@ -1,6 +1,7 @@
 package repo;
 
 import domain.Spitter;
+import domain.Spittle;
 
 import java.sql.*;
 
@@ -11,38 +12,57 @@ public class SpitterDAOImpl implements DAO<Spitter> {
     private final String table_name = "spitter";
 
     @Override
-    public void create(Spitter sp) throws SQLException, ClassNotFoundException {
+    public Spitter create(Spitter sp) throws SQLException, ClassNotFoundException {
 
-        String query = "INSERT INTO "+table_name+" (idSpitter, username, password, email, firstname, lastname, description) " +
-                        "VALUES ( '"+sp.getId()+"', '" +sp.getUsername()+"', '"+sp.getPassword()+"', '"+sp.getEmail()+"', '" +
+        String insertQuery = "INSERT INTO "+table_name+" ( username, password, email, firstname, lastname, description) " +
+                        "VALUES ( '" +sp.getUsername()+"', '"+sp.getPassword()+"', '"+sp.getEmail()+"', '" +
                         sp.getFirstName()+"', '" +sp.getLastName()+"', '"+sp.getDescription()+"')";
+
+        String keyQuery = "SELECT LAST_INSERT_ID()";
 
         try{
             Statement stmt = DBConnection.getInstance().getStmt();
-            stmt.executeUpdate(query);
+            stmt.executeUpdate(insertQuery);
 
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
+
+            // Get last ID (the one just inserted).
+            Long id = null;
+            ResultSet results = stmt.executeQuery(keyQuery);
+
+            if (results.next()) {
+                id = Long.valueOf(results.getInt(1));
+            }
+
+            results.close();
+
+            // Update obj and return it.
+            sp.setId(id);
+            System.out.println("Spitter with id:"+sp.getId()+", added to DB Successfully");
+            return sp;
+
         } catch (SQLIntegrityConstraintViolationException e){
-
             System.err.println("Spitter already exists");
-            return;
-
+            return null;
         } catch (SQLException e){
             System.err.print(e);
             e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
-        System.out.println("Spitter "+sp.getUsername()+", added to DB Successfully");
+        return null;
+
     }
 
     @Override
-    public void read(Spitter sp) throws SQLException, ClassNotFoundException {
+    public Spitter read(Long id) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT * " +
                         "FROM "+table_name+" " +
-                        "WHERE idSpitter = '"+sp.getId()+"'";
+                        "WHERE idSpitter = '"+ id +"'";
+
+        Spitter spitter = null;
 
         try {
             Statement stmt = DBConnection.getInstance().getStmt();
@@ -53,8 +73,9 @@ public class SpitterDAOImpl implements DAO<Spitter> {
 
             // STEP 5: Extract data from result set
             while(results.next()){
+
                 //Retrieve by column name
-                int id = results.getInt("idSpitter");
+                Long idSpitter = results.getLong("idSpitter");
                 String username  = results.getString("username");
                 String password = results.getString("password");
                 String email = results.getString("email");
@@ -62,14 +83,7 @@ public class SpitterDAOImpl implements DAO<Spitter> {
                 String lname = results.getString("lastName");
                 String desc = results.getString("description");
 
-                //Display values
-                System.out.print("id: " + id);
-                System.out.print(", user: " + username);
-                System.out.print(", password: " + password);
-                System.out.print(", email: " + email);
-                System.out.print(", fname: " + fname);
-                System.out.print(", lname: " + lname);
-                System.out.print(", desc: " + desc + "\n");
+                spitter = new Spitter(idSpitter, username,password,email,fname,lname, desc);
             }
             results.close();
 
@@ -79,37 +93,56 @@ public class SpitterDAOImpl implements DAO<Spitter> {
             DBConnection.getInstance().getConn().rollback();
         }
 
+        if (spitter == null){
+            System.err.println("Spitter with id:"+id+", don't exist in our DB.");
+        }else{
+            System.out.println("Spitter with id: "+id+", read was Successfully from DB");
+        }
 
+        return spitter;
 
-        System.out.println("Spitter : "+sp.getUsername()+", read was Successfully from DB");
     }
 
     @Override
-    public void update(Spitter sp, String updateText) throws SQLException, ClassNotFoundException {
+    public Spitter update(Long id, String updateText) throws SQLException, ClassNotFoundException {
 
-        String query = "UPDATE "+table_name+" " +
+        // Check if exists first.
+        if (read(id)==null){
+            return null;
+        }
+
+        String updateQuery = "UPDATE "+table_name+" " +
                         "SET description = '"+updateText+"' " +
-                        "WHERE idSpitter = '" +sp.getId()+"'";
+                        "WHERE idSpitter = '" + id +"'";
 
         try{
             Statement stmt = DBConnection.getInstance().getStmt();
-            stmt.executeUpdate(query);
+            stmt.executeUpdate(updateQuery);
 
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
+
         }catch (SQLException e){
             DBConnection.getInstance().getConn().rollback();
             System.err.print(e);
             e.printStackTrace();
         }
 
-        System.out.println("Spitter: "+sp.getUsername()+", Update desc to DB was Successfully");
+        System.out.println("Spitter with id:"+ id +", Desc updated to our DB was Successfully");
+        return read(id);
     }
 
     @Override
-    public void delete(Spitter sp) throws SQLException, ClassNotFoundException {
+    public boolean delete(Long id) throws SQLException, ClassNotFoundException {
 
-        String query = "DELETE FROM "+table_name+" WHERE idSpitter = '" +sp.getId()+"'";
+        // Check if exists first.
+        if (read(id)==null){
+            return false;
+        }
+
+
+        String query = "DELETE FROM "+table_name+" WHERE idSpitter = '" + id +"'";
+        boolean delete = false;
 
         try{
             Statement stmt = DBConnection.getInstance().getStmt();
@@ -118,12 +151,27 @@ public class SpitterDAOImpl implements DAO<Spitter> {
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
 
+            // flag updated.
+            delete = true;
+
         }catch (SQLException e){
             System.err.print(e);
             e.printStackTrace();
             DBConnection.getInstance().getConn().rollback();
         }
 
-        System.out.println("Spitter: "+sp.getUsername()+", Deleted Successfully from DB");
+        if (delete){
+            System.out.println("Spitter with id:"+ id +", Deleted Successfully from our DB");
+        } else {
+            System.err.println("Spitter with id:"+ id +", don't exist in our DB");
+        }
+        return delete;
+    }
+
+    @Override
+    public boolean delete(Spitter sp) throws SQLException, ClassNotFoundException {
+
+        return delete(sp.getId());
+
     }
 }

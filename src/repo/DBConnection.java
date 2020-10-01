@@ -9,7 +9,7 @@ public class DBConnection {
     private static DBConnection dbConnection;
 
     // JDBC driver name and database URL
-    static final String  JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String  JDBC_DRIVER = "com.mysql.cj.jdbc.Driver"; // old val for other "com.mysql.jdbc.Driver".
     static final String DB_URL = "jdbc:mysql://localhost:3306/spittr_db";
 
     // Database credentials
@@ -57,5 +57,10 @@ public class DBConnection {
         conn.close();
     }
 
-
 }
+
+    /*[A]tomicity means either all successful or none.
+      [C]onsistency ensures bringing the database from one consistent state to another consistent state.
+      [I]solation ensures that transaction is isolated from other transaction.
+      [D]urability means once a transaction has been committed, it will remain so, even in the event of errors, power loss etc.
+     */

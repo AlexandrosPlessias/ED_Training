@@ -47,34 +47,33 @@ public class main {
     public static void testEra() throws SQLException, ClassNotFoundException, IllegalAccessException {
 
         // User creation.
-        Spitter tempUser = new Spitter(8, "Alexdddas","a&12da345678", "maisl1@gmail.com", "Alex","fsd","Hello1 f Splitter.");
+        Spitter tempUser = new Spitter("kghkjh","a&kghjghkh", "yahoo123@gmail.com", "fanis","lamp","Splitter gdfgfd");
 
         //User's services check.
         Service userService = new SpitterServiceImpl();
-        userService.create(tempUser);
-        userService.read(tempUser);
-        //userService.update(tempUser, "The new updated description.");
-        //userService.delete(tempUser);
+        //userService.create(tempUser);
+        Spitter readedUser = (Spitter) userService.read(14L);
+        if (readedUser != null) System.out.println(readedUser.toString());
+        //userService.update(14L, "The new updated2 description.");
+        //System.out.println(userService.delete(100L));
+        //tempUser.toString();
 
-        System.out.println();
+        //System.out.println();
 
-        // Tweet creation with date.
+        //Tweet creation with date.
         Date date=Date.valueOf("2020-10-01");
-        Spittle tempTweet = new Spittle(7, "Hellos world 176",date,156456.0534,654321.0897,7);
+        Spittle tempTweet = new Spittle("Hellos jhg 18546",date,158.53,6547.09, 14L);
 
         //Tweet's services check.
         Service tweetService = new SpittleServiceImpl();
-        tweetService.create(tempTweet);
-        tweetService.read(tempTweet);
-        //tweetService.update(tempTweet, "Hello new world");
-        //tweetService.delete(tempTweet);
+
+        //tweetService.create(tempTweet);
+        Spittle readedTweer = (Spittle) tweetService.read(10L);
+        if (readedTweer != null) System.out.println(readedTweer.toString());
+        //tweetService.update(14L, "Hello new world");
+        //System.out.println(tweetService.delete(14L);
+        //tempTweet.toString();
 
     }
 
 }
-
-    /*[A]tomicity means either all successful or none.
-      [C]onsistency ensures bringing the database from one consistent state to another consistent state.
-      [I]solation ensures that transaction is isolated from other transaction.
-      [D]urability means once a transaction has been committed, it will remain so, even in the event of errors, power loss etc.
-     */
