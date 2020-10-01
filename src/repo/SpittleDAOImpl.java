@@ -4,6 +4,7 @@ import domain.Spittle;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
 
@@ -14,9 +15,9 @@ public class SpittleDAOImpl implements DAO<Spittle>{
     @Override
     public void create(Spittle sptl) throws SQLException, ClassNotFoundException {
 
-        String query = "INSERT INTO "+table_name+" (idSpittle, message, time, latitude, longitude) " +
+        String query = "INSERT INTO "+table_name+" (idSpittle, message, time, latitude, longitude, idSpitter) " +
                         "VALUES ('"+sptl.getId()+"', '"+sptl.getMessage()+"','"+ sptl.getTime()+"','"+
-                         sptl.getLatitude()+ "', '"+sptl.getLontitude()+"')";
+                         sptl.getLatitude()+ "', '"+sptl.getLontitude()+"', '"+sptl.getOwnerId()+"')";
 
         try {
             Statement stmt = DBConnection.getInstance().getStmt();
@@ -24,6 +25,10 @@ public class SpittleDAOImpl implements DAO<Spittle>{
 
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
+        } catch ( SQLIntegrityConstraintViolationException e){
+            System.err.println("Spittle already exists");
+            return;
+
         } catch (SQLException e){
             System.err.print(e);
             e.printStackTrace();
@@ -55,13 +60,15 @@ public class SpittleDAOImpl implements DAO<Spittle>{
                 String time = results.getString("time");
                 String latitude = results.getString("latitude");
                 String longitude = results.getString("longitude");
+                int ownerId = results.getInt("idSpitter");
 
                 //Display values
                 System.out.print("idSpittle: " + id);
                 System.out.print(", message: " + message);
                 System.out.print(", time: " + time);
                 System.out.print(", latitude: " + latitude);
-                System.out.print(", longitude: " + longitude + "\n");
+                System.out.print(", latitude: " + latitude);
+                System.out.print(", idSpitter: " + ownerId + "\n");
             }
             results.close();
         } catch (SQLException e){

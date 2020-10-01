@@ -59,8 +59,9 @@ public class main {
         System.out.println();
 
         // Tweet creation with date.
-        Date date=Date.valueOf("2020-09-30");
-        Spittle tempTweet = new Spittle(8, "Hellos world 176",date,156456.0534,654321.0897);
+        Date date=Date.valueOf("2020-10-01");
+        Spittle tempTweet = new Spittle(7, "Hellos world 176",date,156456.0534,654321.0897,7);
+
         //Tweet's services check.
         Service tweetService = new SpittleServiceImpl();
         tweetService.create(tempTweet);

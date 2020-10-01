@@ -8,25 +8,28 @@ public class Spittle {
 
     private static int count = 0;
     private final int id;
+    private int ownerId;
     private String message;
     private final Date time; // calendar date
     private Double latitude;
     private Double longitude;
 
-    public Spittle(int id, String message, Date date, Double latitude, Double longitude) {
+    public Spittle(int id, String message, Date date, Double latitude, Double longitude, int ownerId) {
         this.id = id;
+        this.ownerId = ownerId;
         this.message = message;
         this.time = date;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Spittle(String message, Date date, Double latitude, Double longitude) {
+    public Spittle(String message, Date date, Double latitude, Double longitude, int ownerId) {
         this.id = count++;
         this.message = message;
         this.time = date;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.ownerId = ownerId;
     }
 
 
@@ -49,6 +52,10 @@ public class Spittle {
 
     public Double getLontitude() {
         return longitude;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
     }
 
     // Setter

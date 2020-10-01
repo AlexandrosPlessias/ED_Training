@@ -2,10 +2,7 @@ package repo;
 
 import domain.Spitter;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Savepoint;
-import java.sql.Statement;
+import java.sql.*;
 
 // public void insert(Spittle spittle)
 
@@ -26,6 +23,11 @@ public class SpitterDAOImpl implements DAO<Spitter> {
 
             //Committing the transaction
             DBConnection.getInstance().getConn().commit();
+        } catch (SQLIntegrityConstraintViolationException e){
+
+            System.err.println("Spitter already exists");
+            return;
+
         } catch (SQLException e){
             System.err.print(e);
             e.printStackTrace();
