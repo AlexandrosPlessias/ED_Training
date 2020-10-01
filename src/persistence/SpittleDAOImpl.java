@@ -1,7 +1,6 @@
 package persistence;
 
 import domain.Spittle;
-
 import java.sql.*;
 
 

@@ -1,10 +1,7 @@
 package persistence;
 
 import domain.Spitter;
-
 import java.sql.*;
-
-// public void insert(Spittle spittle)
 
 public class SpitterDAOImpl implements DAO<Spitter> {
 

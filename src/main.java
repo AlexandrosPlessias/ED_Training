@@ -47,18 +47,24 @@ public class main {
     public static void testEra() throws SQLException, ClassNotFoundException, IllegalAccessException {
 
         // User creation.
-        Spitter tempUser = new Spitter("kghkjh","a&kghjghkh", "yahoo123@gmail.com", "fanis","lamp","Splitter gdfgfd");
+        Spitter tempUser = new Spitter("Hidernate new entry","hidernatehjghkh", "hidernate@gmail.com",
+                                        "hidernate","hidernate2","hidernate");
 
         //User's services check.
         Service userService = new SpitterServiceImpl();
+        userService.create(tempUser);
+
+
+
         //userService.create(tempUser);
-        Spitter readedUser = (Spitter) userService.read(14L);
-        if (readedUser != null) System.out.println(readedUser.toString());
+        //Spitter readedUser = (Spitter) userService.read(14L);
+        //if (readedUser != null) System.out.println(readedUser.toString());
         //userService.update(14L, "The new updated2 description.");
         //System.out.println(userService.delete(100L));
         //tempUser.toString();
 
         //System.out.println();
+
 
         //Tweet creation with date.
         Date date=Date.valueOf("2020-10-01");

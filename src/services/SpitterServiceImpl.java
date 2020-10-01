@@ -3,7 +3,9 @@ package services;
 
 import domain.Spitter;
 import persistence.DAO;
+import persistence.SpitterDAOHibernateImpl;
 import persistence.SpitterDAOImpl;
+
 import java.sql.SQLException;
 
 // Genetic became from <T> to Spitter.
@@ -12,7 +14,9 @@ public class SpitterServiceImpl implements Service<Spitter> {
     private DAO spitterDAO ;
 
     public SpitterServiceImpl() {
-        this.spitterDAO = new SpitterDAOImpl();
+
+        //this.spitterDAO = new SpitterDAOImpl();
+        this.spitterDAO = new SpitterDAOHibernateImpl(); // Switch from JDBC to Hibernate.
     }
 
 
