@@ -20,7 +20,6 @@ public class SpitterServiceImpl implements Service<Spitter> {
     }
 
 
-    @Override
     public Spitter create(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
          if (spitter.valid() ){
@@ -32,7 +31,6 @@ public class SpitterServiceImpl implements Service<Spitter> {
 
     }
 
-    @Override
     public Spitter read(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
         if (id != null){
@@ -43,7 +41,6 @@ public class SpitterServiceImpl implements Service<Spitter> {
         }
     }
 
-    @Override
     public Spitter update(Long id, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
         if (id != null && updateText != null) {
@@ -54,7 +51,6 @@ public class SpitterServiceImpl implements Service<Spitter> {
         }
     }
 
-    @Override
     public boolean delete(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
         if (id != null) {
@@ -65,7 +61,6 @@ public class SpitterServiceImpl implements Service<Spitter> {
         }
     }
 
-    @Override
     public boolean delete(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
         if (spitter.valid()) {
