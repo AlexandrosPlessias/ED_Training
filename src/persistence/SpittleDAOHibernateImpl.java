@@ -1,6 +1,7 @@
 package persistence;
 
 import domain.Spitter;
+import domain.Spittle;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,7 +11,7 @@ import org.hibernate.cfg.Configuration;
 import java.io.File;
 import java.sql.SQLException;
 
-public class SpitterDAOHibernateImpl implements DAO<Spitter> {
+public class SpittleDAOHibernateImpl implements DAO<Spittle> {
 
     private final String configXML = "src\\hibernate.cfg.xml";
     private SessionFactory sessionFactory;
@@ -19,7 +20,7 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
 
 
     //Constructor.
-    public SpitterDAOHibernateImpl (){
+    public SpittleDAOHibernateImpl (){
 
         try {
             sessionFactory = new Configuration().configure(new File(configXML)).buildSessionFactory();
@@ -30,13 +31,13 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
     }
 
     @Override
-    public Spitter create(Spitter spitter) {
+    public Spittle create(Spittle spittle) throws SQLException, ClassNotFoundException {
 
         session = sessionFactory.openSession();
 
         try {
             transaction = session.beginTransaction();
-            session.save(spitter);
+            session.save(spittle);
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();
@@ -46,19 +47,18 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
             session.close();
         }
 
-        System.out.println("User "+spitter.getId()+" created.");
-        return spitter;
+        System.out.println("Tweet "+spittle.getId()+" created.");
+        return spittle;
     }
 
     @Override
-    public Spitter read(Long id) {
-
+    public Spittle read(Long id) throws SQLException, ClassNotFoundException {
         session = sessionFactory.openSession();
-        Spitter user = null;
+        Spittle tweet = null;
 
         try {
             transaction = session.beginTransaction();
-            user = session.get(Spitter.class, id);
+            tweet = session.get(Spittle.class, id);
             transaction.commit();
         } catch (HibernateException e) {
             transaction.rollback();
@@ -68,30 +68,29 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
             session.close();
         }
 
-        if (user != null){
-            System.out.println("User " + user.getId() + " Readied/Loaded Successfully...");
+        if (tweet != null){
+            System.out.println("Tweet " + tweet.getId() + " Readied/Loaded Successfully...");
         }else{
-            System.err.println("User " + id + " Don't found in DB.");
+            System.err.println("Tweet " + id + " Don't found in DB.");
         }
 
-        return user;
+        return tweet;
     }
 
     @Override
-    public Spitter update(Long id, String updateText) throws SQLException, ClassNotFoundException {
-
+    public Spittle update(Long id, String updateText) throws SQLException, ClassNotFoundException {
         session = sessionFactory.openSession();
-        Spitter user = null;
+        Spittle tweet = null;
 
         try {
             transaction = session.beginTransaction();
 
             // GET -> SET -> UPDATE
-            user = session.get(Spitter.class, id); //Retrieving object which we want to update
+            tweet = session.get(Spittle.class, id); //Retrieving object which we want to update
 
-            if (user != null){
-                user.setDescription(updateText); //Set the updated field text.
-                session.update(user); //Update to the database table.
+            if (tweet != null){
+                tweet.setMessage(updateText); //Set the updated field text.
+                session.update(tweet); //Update to the database table.
                 transaction.commit();
             }
 
@@ -103,13 +102,13 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
             session.close();
         }
 
-        if (user != null){
-            System.out.println("User " + user.getId() + " Description updated Successfully...");
+        if (tweet != null){
+            System.out.println("Tweet " + tweet.getId() + " Description updated Successfully...");
         }else{
-            System.err.println("User " + id + " Don't found in DB.");
+            System.err.println("Tweet " + id + " Don't found in DB.");
         }
 
-        return user;
+        return tweet;
 
     }
 
@@ -118,14 +117,14 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
 
         boolean deleteFlag = false;
         session = sessionFactory.openSession();
-        Spitter user = null;
+        Spittle tweet = null;
 
         try {
             transaction = session.beginTransaction();
-            user = session.get(Spitter.class, id);
+            tweet = session.get(Spittle.class, id);
 
-            if (user != null){
-                session.delete(user);
+            if (tweet != null){
+                session.delete(tweet);
                 transaction.commit();
                 deleteFlag = true;
             }
@@ -139,16 +138,16 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
         }
 
         if (deleteFlag == true){
-            System.out.println("User " + id + " deleted Successfully...");
+            System.out.println("Tweet " + id + " deleted Successfully...");
         }else{
-            System.err.println("User " + id + " Don't found in DB.");
+            System.err.println("Tweet " + id + " Don't found in DB.");
         }
 
         return deleteFlag;
     }
 
     @Override
-    public boolean delete(Spitter spitter) throws SQLException, ClassNotFoundException {
-        return delete(spitter.getId());
+    public boolean delete(Spittle spittle) throws SQLException, ClassNotFoundException {
+        return delete(spittle.getId());
     }
 }

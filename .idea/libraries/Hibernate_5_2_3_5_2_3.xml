@@ -18,6 +18,7 @@
       <root url="jar://$PROJECT_DIR$/lib/jsr250-api-1.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/hibernate-core-5.2.3.Final.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jaxb-api-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.activation-api-1.2.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

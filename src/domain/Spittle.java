@@ -6,7 +6,7 @@ import java.sql.Date;
 
 // Tweet msg data & loc & timestamp.
 @Entity
-@Table(name = "spittle", schema = "spittr_db")
+@Table(name = "spittle")
 public class Spittle {
 
     @Id
@@ -102,10 +102,12 @@ public class Spittle {
     }
 
     // Class for NULL Checking...
-    public boolean checkNull() throws IllegalAccessException {
-        for (Field f : getClass().getDeclaredFields())
-            if (f.get(this) != null)
-                return false;
-        return true;
+    public boolean valid()  {
+        if (this.message != null && time !=null && this.latitude != null
+                && this.longitude != null && this.ownerId != null){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

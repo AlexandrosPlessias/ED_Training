@@ -33,6 +33,7 @@ public class DBConnection {
         stmt = conn.createStatement();
     }
 
+
     public static DBConnection getInstance() throws SQLException, ClassNotFoundException {
         if (dbConnection == null){ //if there is no instance available... create new one
             dbConnection = new DBConnection();
@@ -40,6 +41,7 @@ public class DBConnection {
 
         return dbConnection;
     }
+
 
     // Get statement for requests and closing.
     public Statement getStmt() {

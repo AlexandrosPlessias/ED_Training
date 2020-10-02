@@ -23,7 +23,7 @@ public class SpitterServiceImpl implements Service<Spitter> {
     @Override
     public Spitter create(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
-         if (spitter != null){
+         if (spitter.valid() ){
              return (Spitter) spitterDAO.create(spitter);
          } else {
              System.err.println("Service violation: Null object tried to created...");
@@ -68,7 +68,7 @@ public class SpitterServiceImpl implements Service<Spitter> {
     @Override
     public boolean delete(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
         // Not null check
-        if (!spitter.checkNull()) {
+        if (spitter.valid()) {
             return spitterDAO.delete(spitter);
         }else{
             System.err.println("Service violation: Try to delete Null object...");

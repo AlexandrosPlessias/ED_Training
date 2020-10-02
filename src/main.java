@@ -11,11 +11,6 @@ import java.sql.Date;
 
 public class main {
 
-    //TODO:
-    // generics used removed Object----> [OK]
-    // service check not Null  ---> [OK]
-    // commit rollback ---> [OK]
-    // db relation by ids ???? ask... (logika id manipulate by domain & tweet add owner.)
 
     public static void main(String[] args)  {
 
@@ -23,11 +18,11 @@ public class main {
             // Disable Autocommit SQL's switch from TRUE (individual SQL STATEMENT committed auto)
             // to False for Education and Transaction pattern implementation (ACID aka ALL or NOTHING)
             // statement1 -> statement2 -> statement3 commit together as ONE in the end?
-            DBConnection.getInstance().getConn().setAutoCommit(false);
+            //DBConnection.getInstance().getConn().setAutoCommit(false);
 
             testEra();
 
-            DBConnection.getInstance().closeAll();
+            //DBConnection.getInstance().closeAll();
 
         } catch (SQLException e) {
             System.err.print(e);
@@ -46,39 +41,36 @@ public class main {
 
     public static void testEra() throws SQLException, ClassNotFoundException, IllegalAccessException {
 
-        // User creation.
-        Spitter tempUser = new Spitter("Hidernate new entry","hidernatehjghkh", "hidernate@gmail.com",
-                                        "hidernate","hidernate2","hidernate");
+        // -------------User creation.---------
+        //Spitter tempUser = new Spitter("Hidernate new entry23","hidernatehjghk32h", "hiderna32te@gmail.com","hidern32ate","hid32ernate2","hidernate32");
 
         //User's services check.
-        Service userService = new SpitterServiceImpl();
-        userService.create(tempUser);
+        //Service userService = new SpitterServiceImpl();
 
-
+        // User's CRUD testing.
 
         //userService.create(tempUser);
-        //Spitter readedUser = (Spitter) userService.read(14L);
-        //if (readedUser != null) System.out.println(readedUser.toString());
-        //userService.update(14L, "The new updated2 description.");
-        //System.out.println(userService.delete(100L));
-        //tempUser.toString();
-
-        //System.out.println();
+        //Spitter user14 = (Spitter) userService.read(16L);
+        //if (user14 != null) System.out.println(user14.getUsername());
+        //userService.update(2L, "The new hibernate updated description.");
+        //System.out.println(userService.delete(tempUser));
 
 
-        //Tweet creation with date.
+
+        //----------------Tweet creation with date.---------------
         Date date=Date.valueOf("2020-10-01");
         Spittle tempTweet = new Spittle("Hellos jhg 18546",date,158.53,6547.09, 14L);
 
         //Tweet's services check.
         Service tweetService = new SpittleServiceImpl();
 
+        // Tweet's CRUD testing.
+
         //tweetService.create(tempTweet);
-        Spittle readedTweer = (Spittle) tweetService.read(10L);
-        if (readedTweer != null) System.out.println(readedTweer.toString());
-        //tweetService.update(14L, "Hello new world");
-        //System.out.println(tweetService.delete(14L);
-        //tempTweet.toString();
+        //Spittle readedTweer = (Spittle) tweetService.read(11L);
+        //if (readedTweer != null) System.out.println(readedTweer.toString());
+        //tweetService.update(17L, "Hello new world");
+        //System.out.println(tweetService.delete(tempTweet));
 
     }
 

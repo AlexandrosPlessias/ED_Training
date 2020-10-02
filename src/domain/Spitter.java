@@ -6,8 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Use class for user's info & Tweets list.
+
+//The cascade attribute is set to CascadeType.ALL, meaning that all the JPA and Hibernate entity state transitions
+// (e.g., persist, merge, remove) are passed from the parent Post entity to the PostComment child entities.
+
+//The orphanRemoval attribute is going to instruct the JPA provider to trigger a remove entity state transition when
+// a PostComment entity is no longer referenced by its parent Post entity.
+
 @Entity
-@Table(name = "spitter", schema = "spittr_db")
+@Table(name = "spitter")
 public class Spitter {
 
     @Id
@@ -30,8 +37,10 @@ public class Spitter {
     @Column(name = "lastName", nullable = false, length = 45)
     private String lastName;
 
-    @OneToMany
-    private List<Spittle> spittleList = new ArrayList<>();;     // User's Tweets list.
+    // LAZY = fetch when needed
+    // EAGER = fetch immediately
+    @OneToMany (mappedBy = "ownerId")
+    private List<Spittle> spittleList = new ArrayList<>();;     // User's Tweets Object list.
 
     @Column(name = "description", nullable = false, length = 100)
     private String description;
@@ -146,12 +155,13 @@ public class Spitter {
     }
 
     // Class for NULL Checking...
-    public boolean checkNull() throws IllegalAccessException {
-            for (Field f : getClass().getDeclaredFields()) {
-                if (f.get(this) != null)
-                    return false;
-            }
-            return true;
-        }
+    public boolean valid() {
 
+        if (this.username != null && this.password != null && this.firstName != null &&
+                this.lastName != null && this.description != null && this.email != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
+}
