@@ -914,8 +914,9 @@ SELECT|sys.sys_config:null
     <table id="286" parent="6" name="spittle"/>
     <column id="287" parent="285" name="idSpitter">
       <Position>1</Position>
-      <DataType>int|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="288" parent="285" name="username">
       <Position>2</Position>
@@ -954,8 +955,9 @@ SELECT|sys.sys_config:null
     </key>
     <column id="295" parent="286" name="idSpittle">
       <Position>1</Position>
-      <DataType>int|0s</DataType>
+      <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="296" parent="286" name="message">
       <Position>2</Position>
@@ -977,10 +979,24 @@ SELECT|sys.sys_config:null
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="300" parent="286" name="PRIMARY">
+    <column id="300" parent="286" name="idSpitter">
+      <Position>6</Position>
+      <DataType>bigint|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="301" parent="286" name="idSpitter_idx">
+      <ColNames>idSpitter</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="302" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idSpittle</ColNames>
       <Primary>1</Primary>
     </key>
+    <foreign-key id="303" parent="286" name="idSpitter">
+      <ColNames>idSpitter</ColNames>
+      <RefTableName>spitter</RefTableName>
+      <RefColNames>idSpitter</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>

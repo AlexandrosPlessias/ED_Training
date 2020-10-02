@@ -1,17 +1,34 @@
 package domain;
 
+import javax.persistence.*;
 import java.lang.reflect.Field;
 import java.sql.Date;
 
 // Tweet msg data & loc & timestamp.
+@Entity
+@Table(name = "spittle", schema = "spittr_db")
 public class Spittle {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idSpittle", unique = true, nullable = false)
     private Long id;
+
+    @Column(name = "message", nullable = false, length = 180)
     private String message;
+
+    @Column(name = "time", nullable = false)
     private Date time;
+
+    @Column(name = "latitude", nullable = false)
     private Double latitude;
+
+    @Column(name = "longitude", nullable = false)
     private Double longitude;
+
+    @Column(name = "idSpitter", nullable = false)
     private Long ownerId;
+
 
     // Empty constructor.
     public Spittle(){
@@ -26,6 +43,7 @@ public class Spittle {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
 
     public Spittle(String message, Date date, Double latitude, Double longitude, Long ownerId) {
         this.id = null;
