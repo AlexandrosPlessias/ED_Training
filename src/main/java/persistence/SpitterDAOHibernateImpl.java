@@ -8,11 +8,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import java.sql.SQLException;
-
 public class SpitterDAOHibernateImpl implements DAO<Spitter> {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
     private Transaction transaction = null;
     private Session session = null;
 
@@ -35,10 +33,9 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
             transaction = session.beginTransaction();
             session.save(spitter);
             transaction.commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
-            System.err.println(e);
-            e.printStackTrace();
+            hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }
@@ -56,10 +53,9 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
             transaction = session.beginTransaction();
             user = session.get(Spitter.class, id);
             transaction.commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
-            System.err.println(e);
-            e.printStackTrace();
+            hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }
@@ -73,7 +69,7 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
         return user;
     }
 
-    public Spitter update(Long id, String updateText) throws SQLException, ClassNotFoundException {
+    public Spitter update(Long id, String updateText)  {
 
         session = sessionFactory.openSession();
         Spitter user = null;
@@ -90,10 +86,9 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
                 transaction.commit();
             }
 
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
-            System.err.println(e);
-            e.printStackTrace();
+            hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }
@@ -108,7 +103,7 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
 
     }
 
-    public boolean delete(Long id) throws SQLException, ClassNotFoundException {
+    public boolean delete(Long id) {
 
         boolean deleteFlag = false;
         session = sessionFactory.openSession();
@@ -124,15 +119,14 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
                 deleteFlag = true;
             }
 
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
-            System.err.println(e);
-            e.printStackTrace();
+            hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }
 
-        if (deleteFlag == true){
+        if (deleteFlag){
             System.out.println("User " + id + " deleted Successfully...");
         }else{
             System.err.println("User " + id + " Don't found in DB.");
@@ -141,7 +135,7 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
         return deleteFlag;
     }
 
-    public boolean delete(Spitter spitter) throws SQLException, ClassNotFoundException {
+    public boolean delete(Spitter spitter) {
         return delete(spitter.getId());
     }
 }

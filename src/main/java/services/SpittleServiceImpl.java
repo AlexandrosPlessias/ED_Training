@@ -12,7 +12,7 @@ public class SpittleServiceImpl implements Service<Spittle>{
 
     public SpittleServiceImpl() {
         //this.spittleDAO = new SpittleDAOImpl();
-        this.spittleDAO = new SpittleDAOHibernateImpl();
+        this.spittleDAO = (DAO) new SpittleDAOHibernateImpl();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SpittleServiceImpl implements Service<Spittle>{
     }
 
     @Override
-    public boolean delete(Spittle spittle) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public boolean delete(Spittle spittle) throws SQLException, ClassNotFoundException {
         // Not null check
         if (spittle.valid()){
             return this.spittleDAO.delete(spittle);

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ed.training</groupId>
+    <groupId>com.ed.training-group</groupId>
     <artifactId>training</artifactId>
     <version>1.0-SNAPSHOT</version>
     
@@ -15,8 +15,8 @@
     </properties>
 
 
-   <!-- Most Java projects need dependency, and it can define in manifest file easily. Normally, you will use
-        maven-dependency-plugin to copy project dependencies to somewhere else. -->
+   <!-- build the application. Most Java projects need dependency, and it can define in manifest file easily. Normally,
+        you will use maven-dependency-plugin to copy project dependencies to somewhere else. -->
     <build>
         <plugins>
 
@@ -26,10 +26,15 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
+
+                    <!-- Many Java archive generating plugins accept the archive configuration element to customize the
+                    generation of the archive. In the standard Maven Plugins, this includes the jar, war, ejb, ear and
+                    assembly plugins. -->
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>main</mainClass>
+                            <!-- Will be created in execution stage at package phase -->
                             <classpathPrefix>dependency-jars/</classpathPrefix>
                         </manifest>
                     </archive>
@@ -56,6 +61,7 @@
 
                         <!--  the configuration setup when the phase of package and  applying the configuration -->
                         <configuration>
+                            <!-- Here copied the dependencies from temp m2 to target/dependency-jars/ -->
                             <outputDirectory>
                                 ${project.build.directory}/dependency-jars/
                             </outputDirectory>
@@ -84,7 +90,7 @@
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
-            <version>3.20.0-GA</version>
+            <version>3.23.1-GA</version>
         </dependency>
 
         <!-- HIBERNATE NEEDS -> MYSQL Connector for run MySQL in Java-->
@@ -104,7 +110,7 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
+            <version>2.4.0-b180830.0359</version>
         </dependency>
 
         <!-- JAXB NEEDS  javax.activation-->
@@ -120,7 +126,7 @@
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.0-b170127.1453</version>
+            <version>2.4.0-b180725.0644</version>
         </dependency>
 
 
@@ -133,6 +139,15 @@
         </dependency>
 
         <!-- JAXB ERA ENDS HERE-->
+
+        <!-- Added to remove annoying hibernate spam info messages -->
+        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
 
     </dependencies>
 

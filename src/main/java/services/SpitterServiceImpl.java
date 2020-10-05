@@ -14,7 +14,7 @@ public class SpitterServiceImpl implements Service<Spitter> {
     public SpitterServiceImpl() {
 
         //this.spitterDAO = new SpitterDAOImpl();
-        this.spitterDAO = new SpitterDAOHibernateImpl(); // Switch from JDBC to Hibernate.
+        this.spitterDAO = (DAO) new SpitterDAOHibernateImpl(); // Switch from JDBC to Hibernate.
     }
 
 
@@ -44,7 +44,7 @@ public class SpitterServiceImpl implements Service<Spitter> {
         if (id != null && updateText != null) {
             return (Spitter) spitterDAO.update(id, updateText);
         } else {
-            System.err.println("Service violation: Null object or messsage tried to update a record...");
+            System.err.println("Service violation: Null object or message tried to update a record...");
             return null;
         }
     }

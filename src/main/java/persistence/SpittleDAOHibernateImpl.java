@@ -8,11 +8,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import java.sql.SQLException;
-
 public class SpittleDAOHibernateImpl implements DAO<Spittle> {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
     private Transaction transaction = null;
     private Session session = null;
 
@@ -20,15 +18,11 @@ public class SpittleDAOHibernateImpl implements DAO<Spittle> {
     //Constructor.
     public SpittleDAOHibernateImpl (){
 
-        try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Failed to create sessionFactory object." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+
     }
 
-    public Spittle create(Spittle spittle) throws SQLException, ClassNotFoundException {
+    public Spittle create(Spittle spittle) {
 
         session = sessionFactory.openSession();
 
@@ -36,10 +30,9 @@ public class SpittleDAOHibernateImpl implements DAO<Spittle> {
             transaction = session.beginTransaction();
             session.save(spittle);
             transaction.commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
-            System.err.println(e);
-            e.printStackTrace();
+            hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }
@@ -48,7 +41,7 @@ public class SpittleDAOHibernateImpl implements DAO<Spittle> {
         return spittle;
     }
 
-    public Spittle read(Long id) throws SQLException, ClassNotFoundException {
+    public Spittle read(Long id)  {
         session = sessionFactory.openSession();
         Spittle tweet = null;
 
@@ -56,10 +49,9 @@ public class SpittleDAOHibernateImpl implements DAO<Spittle> {
             transaction = session.beginTransaction();
             tweet = session.get(Spittle.class, id);
             transaction.commit();
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
-            System.err.println(e);
-            e.printStackTrace();
+            hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }
@@ -74,7 +66,7 @@ public class SpittleDAOHibernateImpl implements DAO<Spittle> {
     }
 
 
-    public Spittle update(Long id, String updateText) throws SQLException, ClassNotFoundException {
+    public Spittle update(Long id, String updateText)  {
         session = sessionFactory.openSession();
         Spittle tweet = null;
 
@@ -90,10 +82,9 @@ public class SpittleDAOHibernateImpl implements DAO<Spittle> {
                 transaction.commit();
             }
 
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
-            System.err.println(e);
-            e.printStackTrace();
+            hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }
@@ -108,7 +99,7 @@ public class SpittleDAOHibernateImpl implements DAO<Spittle> {
 
     }
 
-    public boolean delete(Long id) throws SQLException, ClassNotFoundException {
+    public boolean delete(Long id)  {
 
         boolean deleteFlag = false;
         session = sessionFactory.openSession();
@@ -124,15 +115,14 @@ public class SpittleDAOHibernateImpl implements DAO<Spittle> {
                 deleteFlag = true;
             }
 
-        } catch (HibernateException e) {
+        } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
-            System.err.println(e);
-            e.printStackTrace();
+            hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }
 
-        if (deleteFlag == true){
+        if (deleteFlag){
             System.out.println("Tweet " + id + " deleted Successfully...");
         }else{
             System.err.println("Tweet " + id + " Don't found in DB.");
@@ -141,7 +131,7 @@ public class SpittleDAOHibernateImpl implements DAO<Spittle> {
         return deleteFlag;
     }
 
-    public boolean delete(Spittle spittle) throws SQLException, ClassNotFoundException {
+    public boolean delete(Spittle spittle) {
         return delete(spittle.getId());
     }
 }

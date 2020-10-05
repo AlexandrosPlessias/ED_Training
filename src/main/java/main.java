@@ -1,12 +1,11 @@
 import domain.Spitter;
 import domain.Spittle;
-import persistence.DBConnection;
+
 import services.Service;
 import services.SpitterServiceImpl;
 import services.SpittleServiceImpl;
 
 import java.sql.SQLException;
-import java.sql.Date;
 
 
 public class main {
@@ -21,19 +20,22 @@ public class main {
             //DBConnection.getInstance().getConn().setAutoCommit(false);
 
             testUser();
+            System.out.println();
             testTweets();
 
             //DBConnection.getInstance().closeAll();
 
-        } catch (SQLException e) {
-            System.err.print(e);
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.err.print(e);
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            System.err.print(e);
-            e.printStackTrace();
+            System.exit(0);
+
+        } catch (SQLException sqlException) {
+            System.err.print(sqlException);
+            sqlException.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            System.err.print(classNotFoundException);
+            classNotFoundException.printStackTrace();
+        } catch (IllegalAccessException illegalAccessException) {
+            System.err.print(illegalAccessException);
+            illegalAccessException.printStackTrace();
         }
 
 
@@ -77,5 +79,6 @@ public class main {
         //System.out.println(tweetService.delete(tempTweet));
 
     }
+
 
 }
