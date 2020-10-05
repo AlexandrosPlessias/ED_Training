@@ -7,14 +7,107 @@
     <groupId>com.ed.training</groupId>
     <artifactId>training</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    
     <properties>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+
+   <!-- Most Java projects need dependency, and it can define in manifest file easily. Normally, you will use
+        maven-dependency-plugin to copy project dependencies to somewhere else. -->
+    <build>
+        <plugins>
+
+            <!-- For jar creation and  mainClass added. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>main</mainClass>
+                            <classpathPrefix>dependency-jars/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Dependency plugins copied to ${project.build.directory}/dependency-jars/
+                 added in package stage.-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.5.1</version>
+                <executions>
+                    <!-- copy-dependencies applying the configuration setup when the phase of package
+                         in package phase take the compiled code and package it in its distributable format, such as a JAR.-->
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+
+                        <!-- Description : The goals to execute with the given configuration. -->
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+
+                        <!--  the configuration setup when the phase of package and  applying the configuration -->
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/dependency-jars/
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <!--
+    <build>
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>2.4.1</version>
+
+                <executions>
+                    <execution>
+                        <id>make-executable-jar-with-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <mainClass>main</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    -->
+
 
     <dependencies>
 
+        <!-- HIBERNATE USED FOR DB MANIPULATION ETC. -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -22,12 +115,64 @@
             <version>5.2.3.Final</version>
         </dependency>
 
+        <!-- HIBERNATE NEEDS -> JAVASSIST Javassist (Java Programming Assistant) makes Java bytecode manipulation simple. It is a class
+        library for editing bytecodes in Java;-->
+        <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.20.0-GA</version>
+        </dependency>
+
+        <!-- HIBERNATE NEEDS -> MYSQL Connector for run MySQL in Java-->
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.21</version>
+        </dependency>
+
+
+
+        <!-- HIBERNATE NEEDS -> JAXB ERA STARTS HERE-->
+
+        <!-- The javaType binding declaration can be used to customize the binding of an
+        XML schema datatype to a Java datatype -->
+        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <!-- JAXB NEEDS  javax.activation-->
+        <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1</version>
+        </dependency>
+
+        <!-- JAXB NEEDS glassfish-->
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.0-b170127.1453</version>
+        </dependency>
+
+
+        <!-- JAXB.annotation depending on the istack-commons-runtime-->
         <!-- https://mvnrepository.com/artifact/com.sun.istack/istack-commons-runtime -->
         <dependency>
             <groupId>com.sun.istack</groupId>
             <artifactId>istack-commons-runtime</artifactId>
             <version>4.0.0-M2</version>
         </dependency>
+
+
+        <!-- JAXB ERA ENDS HERE-->
+
 
 
     </dependencies>

@@ -1,12 +1,12 @@
 services\Service.class
-domain\Spittle.class
 main.class
 persistence\DBConnection.class
 domain\Spitter.class
-persistence\SpitterDAOHibernateImpl.class
-persistence\SpitterDAOImpl.class
 persistence\SpittleDAOImpl.class
 services\SpittleServiceImpl.class
 persistence\DAO.class
 persistence\SpittleDAOHibernateImpl.class
+domain\Spittle.class
+persistence\SpitterDAOHibernateImpl.class
+persistence\SpitterDAOImpl.class
 services\SpitterServiceImpl.class

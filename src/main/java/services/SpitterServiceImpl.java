@@ -1,10 +1,8 @@
 package services;
 
-
 import domain.Spitter;
 import persistence.DAO;
 import persistence.SpitterDAOHibernateImpl;
-import persistence.SpitterDAOImpl;
 
 import java.sql.SQLException;
 
@@ -20,7 +18,7 @@ public class SpitterServiceImpl implements Service<Spitter> {
     }
 
 
-    public Spitter create(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public Spitter create(Spitter spitter) throws SQLException, ClassNotFoundException {
         // Not null check
          if (spitter.valid() ){
              return (Spitter) spitterDAO.create(spitter);
@@ -31,7 +29,7 @@ public class SpitterServiceImpl implements Service<Spitter> {
 
     }
 
-    public Spitter read(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public Spitter read(Long id) throws SQLException, ClassNotFoundException {
         // Not null check
         if (id != null){
             return (Spitter) spitterDAO.read(id);
@@ -41,7 +39,7 @@ public class SpitterServiceImpl implements Service<Spitter> {
         }
     }
 
-    public Spitter update(Long id, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public Spitter update(Long id, String updateText) throws SQLException, ClassNotFoundException {
         // Not null check
         if (id != null && updateText != null) {
             return (Spitter) spitterDAO.update(id, updateText);
@@ -51,7 +49,7 @@ public class SpitterServiceImpl implements Service<Spitter> {
         }
     }
 
-    public boolean delete(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public boolean delete(Long id) throws SQLException, ClassNotFoundException {
         // Not null check
         if (id != null) {
             return spitterDAO.delete(id);
@@ -61,7 +59,7 @@ public class SpitterServiceImpl implements Service<Spitter> {
         }
     }
 
-    public boolean delete(Spitter spitter) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public boolean delete(Spitter spitter) throws SQLException, ClassNotFoundException {
         // Not null check
         if (spitter.valid()) {
             return spitterDAO.delete(spitter);

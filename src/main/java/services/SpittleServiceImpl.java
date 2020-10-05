@@ -2,9 +2,7 @@ package services;
 
 import domain.Spittle;
 import persistence.DAO;
-import persistence.SpitterDAOHibernateImpl;
 import persistence.SpittleDAOHibernateImpl;
-import persistence.SpittleDAOImpl;
 
 import java.sql.SQLException;
 
@@ -18,7 +16,7 @@ public class SpittleServiceImpl implements Service<Spittle>{
     }
 
     @Override
-    public Spittle create(Spittle spittle) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public Spittle create(Spittle spittle) throws SQLException, ClassNotFoundException {
         // Not null check
         if (spittle.valid()){
             return (Spittle) this.spittleDAO.create(spittle);
@@ -30,7 +28,7 @@ public class SpittleServiceImpl implements Service<Spittle>{
     }
 
     @Override
-    public Spittle read(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public Spittle read(Long id) throws SQLException, ClassNotFoundException {
         // Not null check
         if (id != null) {
             return (Spittle) this.spittleDAO.read(id);
@@ -41,7 +39,7 @@ public class SpittleServiceImpl implements Service<Spittle>{
     }
 
     @Override
-    public Spittle update(Long id, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public Spittle update(Long id, String updateText) throws SQLException, ClassNotFoundException {
         // Not null check
         if (id != null){
             return (Spittle) this.spittleDAO.update(id, updateText);
@@ -53,7 +51,7 @@ public class SpittleServiceImpl implements Service<Spittle>{
     }
 
     @Override
-    public boolean delete(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException {
+    public boolean delete(Long id) throws SQLException, ClassNotFoundException {
         // Not null check
         if (id != null){
             return this.spittleDAO.delete(id);

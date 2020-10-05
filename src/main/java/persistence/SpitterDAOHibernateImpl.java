@@ -8,12 +8,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import java.io.File;
 import java.sql.SQLException;
 
 public class SpitterDAOHibernateImpl implements DAO<Spitter> {
 
-    private final String configXML = "src\\main\\java\\hibernate.cfg.xml";
     private SessionFactory sessionFactory;
     private Transaction transaction = null;
     private Session session = null;
@@ -22,7 +20,7 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
     public SpitterDAOHibernateImpl (){
 
         try {
-            sessionFactory = new Configuration().configure(new File(configXML)).buildSessionFactory();
+            sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
