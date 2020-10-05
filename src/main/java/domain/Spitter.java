@@ -159,7 +159,6 @@ public class Spitter {
                     ", email='" + email + '\'' +
                     ", firstName='" + firstName + '\'' +
                     ", lastName='" + lastName + '\'' +
-                    ", spittleList=" + spittleList +
                     ", description='" + description + '\'' +
                     '}';
     }

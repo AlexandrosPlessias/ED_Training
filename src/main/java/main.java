@@ -51,8 +51,8 @@ public class main {
         // User's CRUD testing.
 
         //userService.create(tempUser);
-        Spitter user14 = (Spitter) userService.read(16L);
-        if (user14 != null) System.out.println(user14.getUsername());
+        Spitter user14 = (Spitter) userService.read(26L);
+        if (user14 != null) System.out.println(user14.toString());
         //userService.update(2L, "The new hibernate updated description.");
         //System.out.println(userService.delete(tempUser));
 
@@ -71,7 +71,7 @@ public class main {
         // Tweet's CRUD testing.
 
         //tweetService.create(tempTweet);
-        Spittle readedTweer = (Spittle) tweetService.read(11L);
+        Spittle readedTweer = (Spittle) tweetService.read(20L);
         if (readedTweer != null) System.out.println(readedTweer.toString());
         //tweetService.update(17L, "Hello new world");
         //System.out.println(tweetService.delete(tempTweet));
