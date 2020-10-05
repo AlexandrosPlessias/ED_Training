@@ -68,43 +68,6 @@
         </plugins>
     </build>
 
-    <!--
-    <build>
-        <plugins>
-
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <groupId>org.apache.maven.plugins</groupId>
-                <version>2.4.1</version>
-
-                <executions>
-                    <execution>
-                        <id>make-executable-jar-with-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <addClasspath>true</addClasspath>
-                                    <mainClass>main</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
-
-    -->
-
-
     <dependencies>
 
         <!-- HIBERNATE USED FOR DB MANIPULATION ETC. -->
@@ -131,7 +94,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.21</version>
         </dependency>
-
 
 
         <!-- HIBERNATE NEEDS -> JAXB ERA STARTS HERE-->
@@ -170,10 +132,7 @@
             <version>4.0.0-M2</version>
         </dependency>
 
-
         <!-- JAXB ERA ENDS HERE-->
-
-
 
     </dependencies>
 
