@@ -9,20 +9,49 @@
 <html>
 <head>
     <title>User Registration</title>
+
+    <style>
+        .registerForm { width: 500px; clear: both; }
+        .registerForm input { width: 100%; clear: both; }
+    </style>
+
 </head>
+
 <body>
 
-    <h1>User registration Form </h1>
+    <div class="registerForm">
 
-    <form action="register" method="post">
-        Enter Username : <input type="text" name="username"> <br>
-        Enter Password : <input type="password" name="password"> <br>
-        Enter e-main : <input type="email" name="email"> <br>
-        Enter Firstname : <input type="text" name="firstName"> <br>
-        Enter Lastname : <input type="text" name="lastName"> <br>
-        Enter Description : <input type="text" name="desc"> <br>
-        <input type="submit" value="register">
-    </form>
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+
+        <hr>
+
+        <form action="register" method="post">
+
+            <label>Username: </label>
+            <input type="text" name="username" required> <br>
+
+            <label>Password: </label>
+            <input type="password" name="password" required> <br>
+
+            <label>Email: </label>
+            <input type="email" name="email" required> <br>
+
+            <label>Firstname: </label>
+            <input type="text" name="firstName" required> <br>
+
+            <label>Lastname: </label>
+            <input type="text" name="lastName" required> <br>
+
+            <label>Description: </label>
+            <input type="text" name="desc" required> <br>
+
+            <p>By creating an account you agree to our Terms & Privacy.</p>
+            <button type="submit" value="register">Register</button>
+            <button type="reset" value="reset">Reset</button>
+
+        </form>
+    </div>
 
 </body>
 </html>

@@ -4,6 +4,7 @@ import domain.Spitter;
 import services.Service;
 import services.SpitterServiceImpl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,18 +31,17 @@ public class RegisterServlet extends HttpServlet {
         Service userService = new SpitterServiceImpl();
         try {
             userService.create(newUser);
-            // Success message.
-
-
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // Not success message.
         } catch (ClassNotFoundException classNotFoundException) {
             classNotFoundException.printStackTrace();
         } catch (IllegalAccessException illegalAccessException) {
             illegalAccessException.printStackTrace();
         }
+
+        RequestDispatcher rs = request.getRequestDispatcher("succeruser.jsp");
+        rs.forward(request, response);
 
     }
 

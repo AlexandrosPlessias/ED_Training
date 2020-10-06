@@ -7,12 +7,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+    <head>
+        <title>User created successfully </title>
+    </head>
 
-    <h1> </h1>p>
+    <body>
 
-</body>
+        <h1>User created successfully</h1>
+        <hr>
+        <p>Press <a href="index.jsp"> Here </a> to go Home.</p>
+
+    </body>
 </html>
