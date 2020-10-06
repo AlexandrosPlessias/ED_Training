@@ -5,6 +5,7 @@ import services.Service;
 import services.SpitterServiceImpl;
 import services.SpittleServiceImpl;
 
+
 import java.sql.SQLException;
 
 
@@ -12,6 +13,8 @@ public class main {
 
 
     public static void main(String[] args)  {
+
+
 
         try {
             // Disable Autocommit SQL's switch from TRUE (individual SQL STATEMENT committed auto)

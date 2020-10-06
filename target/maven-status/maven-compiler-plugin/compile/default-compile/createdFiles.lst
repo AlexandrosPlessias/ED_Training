@@ -1,3 +1,4 @@
+controller\DashboardServlet.class
 services\Service.class
 main.class
 persistence\DBConnection.class
@@ -10,3 +11,5 @@ domain\Spittle.class
 persistence\SpitterDAOHibernateImpl.class
 persistence\SpitterDAOImpl.class
 services\SpitterServiceImpl.class
+controller\RegisterServlet.class
+controller\HomeServlet.class

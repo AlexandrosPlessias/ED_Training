@@ -6,8 +6,9 @@
 
     <groupId>com.ed.training-group</groupId>
     <artifactId>training</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    
+    <version>1</version>
+    <packaging>war</packaging>
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -15,60 +16,16 @@
     </properties>
 
 
-   <!-- build the application. Most Java projects need dependency, and it can define in manifest file easily. Normally,
-        you will use maven-dependency-plugin to copy project dependencies to somewhere else. -->
     <build>
         <plugins>
 
-            <!-- For jar creation and  mainClass added. -->
+            <!-- For war creation -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
+                <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-
-                    <!-- Many Java archive generating plugins accept the archive configuration element to customize the
-                    generation of the archive. In the standard Maven Plugins, this includes the jar, war, ejb, ear and
-                    assembly plugins. -->
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>main</mainClass>
-                            <!-- Will be created in execution stage at package phase -->
-                            <classpathPrefix>dependency-jars/</classpathPrefix>
-                        </manifest>
-                    </archive>
+                    <webXml>src\main\webapp\WEB-INF\web.xml</webXml>
                 </configuration>
-            </plugin>
-
-            <!-- Dependency plugins copied to ${project.build.directory}/dependency-jars/
-                 added in package stage.-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.5.1</version>
-                <executions>
-                    <!-- copy-dependencies applying the configuration setup when the phase of package
-                         in package phase take the compiled code and package it in its distributable format, such as a JAR.-->
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-
-                        <!-- Description : The goals to execute with the given configuration. -->
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-
-                        <!--  the configuration setup when the phase of package and  applying the configuration -->
-                        <configuration>
-                            <!-- Here copied the dependencies from temp m2 to target/dependency-jars/ -->
-                            <outputDirectory>
-                                ${project.build.directory}/dependency-jars/
-                            </outputDirectory>
-                        </configuration>
-                    </execution>
-
-                </executions>
             </plugin>
 
         </plugins>
@@ -146,6 +103,15 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
+        </dependency>
+
+        <!--Java Servlet API -->
+        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
         </dependency>
 
 
