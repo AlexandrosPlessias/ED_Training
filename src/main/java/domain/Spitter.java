@@ -1,5 +1,7 @@
 package domain;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;

@@ -1,6 +1,11 @@
 package controller;
 
 import domain.Spitter;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+import persistence.DAO;
+import persistence.SpitterDAOHibernateImpl;
 import services.Service;
 import services.SpitterServiceImpl;
 
@@ -16,6 +21,16 @@ import java.sql.SQLException;
 @WebServlet(name = "register", urlPatterns={"/register"})
 public class RegisterServlet extends HttpServlet {
 
+    private Service userService;
+
+    public void init() throws ServletException {
+        super.init();
+        //ApplicationContext context = new FileSystemXmlApplicationContext("spring-config.xml");
+        //DAO spitterDAOHibernate = (SpitterDAOHibernateImpl) context.getBean("spitterDAOHibernate");
+        DAO spitterDAOHibernate = new SpitterDAOHibernateImpl();
+        userService = new SpitterServiceImpl((SpitterDAOHibernateImpl) spitterDAOHibernate);
+        //userService = new SpitterServiceImpl();
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -28,22 +43,21 @@ public class RegisterServlet extends HttpServlet {
         String desc = request.getParameter("desc");
 
         Spitter newUser = new Spitter(name,password,email,firstName,lastName,desc);
-        Service userService = new SpitterServiceImpl();
         try {
-            userService.create(newUser);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException classNotFoundException) {
-            classNotFoundException.printStackTrace();
-        } catch (IllegalAccessException illegalAccessException) {
-            illegalAccessException.printStackTrace();
+            if (userService.create(newUser) == null){
+                throw new SQLException();
+            }
+        } catch (SQLException | ClassNotFoundException | IllegalAccessException  e) {
+            // Redirect to successUser.
+            RequestDispatcher rs = request.getRequestDispatcher("registrationfails.jsp");
+            rs.forward(request, response);
         }
 
-        RequestDispatcher rs = request.getRequestDispatcher("succeruser.jsp");
+        // Redirect to successUser.
+        RequestDispatcher rs = request.getRequestDispatcher("successuser.jsp");
         rs.forward(request, response);
 
     }
-
 
 }

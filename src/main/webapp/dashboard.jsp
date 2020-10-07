@@ -14,7 +14,12 @@
 
     <body>
 
-        <% List<Spittle> allTweets = (List<Spittle>) request.getAttribute("spittles"); %>
+        <% List<Spittle> allTweets;
+            allTweets = (List<Spittle>) request.getAttribute("data"); %>
+
+        <h1> Some tweets list: </h1>
+
+        <hr>
 
         <table style="width:100%">
             <tr>

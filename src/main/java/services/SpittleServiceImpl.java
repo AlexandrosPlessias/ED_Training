@@ -1,18 +1,21 @@
 package services;
 
 import domain.Spittle;
+import org.springframework.stereotype.Component;
 import persistence.DAO;
 import persistence.SpittleDAOHibernateImpl;
 
 import java.sql.SQLException;
 
+@Component
 public class SpittleServiceImpl implements Service<Spittle>{
 
     private DAO spittleDAO;
 
-    public SpittleServiceImpl() {
+    public SpittleServiceImpl(SpittleDAOHibernateImpl spittleDAOHibernate ) {
         //this.spittleDAO = new SpittleDAOImpl();
-        this.spittleDAO = (DAO) new SpittleDAOHibernateImpl();
+        //this.spittleDAO = (DAO) new SpittleDAOHibernateImpl();
+        this.spittleDAO = spittleDAOHibernate;
     }
 
     @Override

@@ -6,6 +6,7 @@
 
     <body>
         <h1>Welcome to Spittr website.</h1>
+        <hr>
 
         <p> Please choose to Register <a href="register.jsp">here</a></p>
         <p> View Tweets  <a href="dashboard.jsp">here</a></p>

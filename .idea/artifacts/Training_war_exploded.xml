@@ -9,6 +9,12 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="mysql-connector-java-8.0.21" />
           <element id="library" level="project" name="Hibernate 5.2.3-5.2.3" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:5.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.hibernate:hibernate-core:5.2.3.Final" />
           <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.3.0.Final" />
           <element id="library" level="project" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" />

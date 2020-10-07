@@ -1,8 +1,11 @@
 package persistence;
 
 import domain.Spitter;
+import org.springframework.stereotype.Component;
+
 import java.sql.*;
 
+@Component
 public class SpitterDAOImpl implements DAO<Spitter> {
 
     private final String table_name = "spitter";

@@ -7,7 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SpitterDAOHibernateImpl implements DAO<Spitter> {
 
     private final SessionFactory sessionFactory;
@@ -35,12 +37,18 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
             transaction.commit();
         } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
+            spitter = null;
             hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }
 
-        System.out.println("User "+spitter.getId()+" created.");
+        if (spitter != null) {
+            System.out.println("User "+spitter.getId()+" created.");
+        }else {
+            System.out.println("User already exists. created.");
+        }
+
         return spitter;
     }
 

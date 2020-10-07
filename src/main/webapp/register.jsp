@@ -53,5 +53,8 @@
         </form>
     </div>
 
+    <hr>
+    <p>Press <a href="index.jsp"> Here </a> to go Home.</p>
+
 </body>
 </html>

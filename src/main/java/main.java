@@ -1,6 +1,11 @@
 import domain.Spitter;
 import domain.Spittle;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+import persistence.DAO;
+import persistence.SpitterDAOHibernateImpl;
+import persistence.SpittleDAOHibernateImpl;
 import services.Service;
 import services.SpitterServiceImpl;
 import services.SpittleServiceImpl;
@@ -22,9 +27,11 @@ public class main {
             // statement1 -> statement2 -> statement3 commit together as ONE in the end?
             //DBConnection.getInstance().getConn().setAutoCommit(false);
 
-            testUser();
+
+            ApplicationContext context = new FileSystemXmlApplicationContext("spring-config.xml");
+            testUser(context);
             System.out.println();
-            testTweets();
+            testTweets(context);
 
             //DBConnection.getInstance().closeAll();
 
@@ -45,13 +52,16 @@ public class main {
     }
 
 
-    public static void testUser() throws IllegalAccessException, SQLException, ClassNotFoundException {
+    public static void testUser(ApplicationContext context) throws IllegalAccessException, SQLException, ClassNotFoundException {
 
         // -------------User creation.---------
         //Spitter tempUser = new Spitter("Alexpl","alex123456", "alex@gmail.com","alex","ples","hidernater");
 
         //User's services check.
-        Service userService = new SpitterServiceImpl();
+
+
+        DAO spitterDAOHibernate = (SpitterDAOHibernateImpl) context.getBean("spitterDAOHibernate");
+        Service userService = new SpitterServiceImpl((SpitterDAOHibernateImpl) spitterDAOHibernate);
 
         // User's CRUD testing.
 
@@ -64,14 +74,15 @@ public class main {
     }
 
 
-    public static void testTweets() throws IllegalAccessException, SQLException, ClassNotFoundException {
+    public static void testTweets(ApplicationContext context) throws IllegalAccessException, SQLException, ClassNotFoundException {
 
         //----------------Tweet creation with date.---------------
         //Date date=Date.valueOf("2020-10-02");
         //Spittle tempTweet = new Spittle("Hello Hibernate.",date,158.53,6547.09, 14L);
 
         //Tweet's services check.
-        Service tweetService = new SpittleServiceImpl();
+        DAO spittleDAOHibernate = (SpittleDAOHibernateImpl) context.getBean("spittleDAOHibernate");
+        Service tweetService = new SpittleServiceImpl((SpittleDAOHibernateImpl) spittleDAOHibernate);
 
         // Tweet's CRUD testing.
 
