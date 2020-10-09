@@ -1,14 +1,15 @@
-import domain.Spitter;
-import domain.Spittle;
+import spittr.config.SpittrWebAppInitializer;
+import spittr.config.TrainingConfig;
+import spittr.domain.Spitter;
+import spittr.domain.Spittle;
+
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-import persistence.DAO;
-import persistence.SpitterDAOHibernateImpl;
-import persistence.SpittleDAOHibernateImpl;
-import services.Service;
-import services.SpitterServiceImpl;
-import services.SpittleServiceImpl;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import spittr.services.Service;
+import spittr.services.SpitterServiceImpl;
+import spittr.services.SpittleServiceImpl;
 
 
 import java.sql.SQLException;
@@ -20,15 +21,14 @@ public class main {
     public static void main(String[] args)  {
 
 
-
         try {
             // Disable Autocommit SQL's switch from TRUE (individual SQL STATEMENT committed auto)
             // to False for Education and Transaction pattern implementation (ACID aka ALL or NOTHING)
             // statement1 -> statement2 -> statement3 commit together as ONE in the end?
             //DBConnection.getInstance().getConn().setAutoCommit(false);
 
+            ApplicationContext context = new AnnotationConfigApplicationContext(TrainingConfig.class);
 
-            ApplicationContext context = new FileSystemXmlApplicationContext("spring-config.xml");
             testUser(context);
             System.out.println();
             testTweets(context);
@@ -58,13 +58,9 @@ public class main {
         //Spitter tempUser = new Spitter("Alexpl","alex123456", "alex@gmail.com","alex","ples","hidernater");
 
         //User's services check.
-
-
-        DAO spitterDAOHibernate = (SpitterDAOHibernateImpl) context.getBean("spitterDAOHibernate");
-        Service userService = new SpitterServiceImpl((SpitterDAOHibernateImpl) spitterDAOHibernate);
+        Service userService = context.getBean(SpitterServiceImpl.class);
 
         // User's CRUD testing.
-
         //userService.create(tempUser);
         Spitter user14 = (Spitter) userService.read(26L);
         if (user14 != null) System.out.println(user14.toString());
@@ -81,8 +77,7 @@ public class main {
         //Spittle tempTweet = new Spittle("Hello Hibernate.",date,158.53,6547.09, 14L);
 
         //Tweet's services check.
-        DAO spittleDAOHibernate = (SpittleDAOHibernateImpl) context.getBean("spittleDAOHibernate");
-        Service tweetService = new SpittleServiceImpl((SpittleDAOHibernateImpl) spittleDAOHibernate);
+        Service tweetService = context.getBean(SpittleServiceImpl.class);
 
         // Tweet's CRUD testing.
 

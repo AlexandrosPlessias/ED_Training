@@ -15,8 +15,8 @@
         <!-- <property name="format_sql">true</property> -->
 
 
-        <mapping class="domain.Spitter"/>
-        <mapping class="domain.Spittle"/>
+        <mapping class="spittr.domain.Spitter"/>
+        <mapping class="spittr.domain.Spittle"/>
     </session-factory>
 
 </hibernate-configuration>
