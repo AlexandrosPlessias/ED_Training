@@ -39,12 +39,15 @@ public class SpittleController {
         allTweets = new ArrayList<>();
 
         try {
-            allTweets.add(spittleService.read(12L));
-            allTweets.add(spittleService.read(13L));
-            allTweets.add(spittleService.read(16L));
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            allTweets = spittleService.getAll();
+
+            if (allTweets.contains(null)){
+                throw new SQLException();
+            }
+
+        } catch (SQLException  e) {
+            // MUST BE OTHER PAGE...
             return "registerFails";
         }
 

@@ -1,5 +1,8 @@
 package spittr.domain;
 
+
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,23 +14,23 @@ import java.util.List;
 
 //The orphanRemoval attribute is going to instruct the JPA provider to trigger a remove entity state transition when
 // a PostComment entity is no longer referenced by its parent Post entity.
-
+@Proxy(lazy = false)
 @Entity
 @Table(name = "spitter")
 public class Spitter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idSpitter", unique = true, nullable = false)
+    @Column(name = "idSpitter", nullable = false, unique = true )
     private Long id;
 
-    @Column(name = "username", unique = true, nullable = false, length = 45)
+    @Column(name = "username", nullable = false, unique = true, length = 45)
     private String username;
 
     @Column(name = "password", nullable = false, length = 45)
     private String password;
 
-    @Column(name = "email",  unique = true, nullable = false, length = 45)
+    @Column(name = "email",   nullable = false, unique = true, length = 45)
     private String email;
 
     @Column(name = "firstName", nullable = false, length = 45)

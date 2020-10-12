@@ -1,12 +1,12 @@
 package spittr.servlets;
 
+//import spittr.config.TrainingConfig;
 import spittr.domain.Spitter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import spittr.services.Service;
 import spittr.services.SpitterServiceImpl;
-import spittr.config.TrainingConfig;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,8 +26,8 @@ public class RegisterServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(TrainingConfig.class);
-        userService = context.getBean(SpitterServiceImpl.class);
+        //ApplicationContext context = new AnnotationConfigApplicationContext(TrainingConfig.class);
+        //userService = context.getBean(SpitterServiceImpl.class);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,7 +46,7 @@ public class RegisterServlet extends HttpServlet {
             if (userService.create(newUser) == null){
                 throw new SQLException();
             }
-        } catch (SQLException | ClassNotFoundException | IllegalAccessException  e) {
+        } catch (SQLException e) {
             // Redirect to failUser.
             RequestDispatcher rs = request.getRequestDispatcher("registerFails.jsp");
             rs.forward(request, response);

@@ -1,9 +1,12 @@
 package spittr.domain;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.sql.Date;
 
 // Tweet msg data & loc & timestamp.
+@Proxy(lazy = false)
 @Entity
 @Table(name = "spittle")
 public class Spittle {

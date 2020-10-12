@@ -17,5 +17,11 @@ C:/Users/aples/IdeaProjects/Training/src/main/java/hibernate.cfg.xml</remarks>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/spittr_db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="spittr_db@localhost" uuid="c5b2bafc-23de-4cb0-9766-af7ea4eddce6">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/spittr_db</jdbc-url>
+    </data-source>
   </component>
 </project>

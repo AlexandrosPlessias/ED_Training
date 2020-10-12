@@ -6,18 +6,18 @@ import java.sql.SQLException;
 public interface Service<T> {
 
     // Create methods By T.
-    T create(T t) throws SQLException, ClassNotFoundException, IllegalAccessException;
+    T create(T t) ;
 
     // Read methods by ID.
-    T read(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException;
+    T read(Long id) ;
 
     // Update methods.
-    T update(Long id, String updateText) throws SQLException, ClassNotFoundException, IllegalAccessException;
+    T update(Long id, String updateText) ;
 
     // Delete methods by ID.
-    boolean delete(Long id) throws SQLException, ClassNotFoundException, IllegalAccessException;
+    boolean delete(Long id) ;
 
     // Delete methods by T.
-    boolean delete(T t) throws SQLException, ClassNotFoundException, IllegalAccessException;
+    boolean delete(T t);
 
 }

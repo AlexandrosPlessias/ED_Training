@@ -5,10 +5,11 @@ import org.springframework.context.annotation.Configuration;
 
 import spittr.persistence.SpitterDAOHibernateImpl;
 import spittr.persistence.SpittleDAOHibernateImpl;
+import spittr.repositories.SpitterRepository;
 import spittr.services.SpitterServiceImpl;
 import spittr.services.SpittleServiceImpl;
 
-@Configuration
+/*
 public class TrainingConfig {
 
     @Bean
@@ -21,14 +22,16 @@ public class TrainingConfig {
         return new SpittleDAOHibernateImpl();
     }
 
+
     @Bean
-    public SpitterServiceImpl spitterService(SpitterDAOHibernateImpl spitterDAOHibernate){
-        return new SpitterServiceImpl(spitterDAOHibernate);
-    }
+    public SpitterServiceImpl spitterService(SpitterDAOHibernateImpl spitterRepository){
+        return new SpitterServiceImpl(spitterRepository);
+   }
+
 
     @Bean
     public SpittleServiceImpl spittleService(SpittleDAOHibernateImpl spittleDAOHibernate){
         return new SpittleServiceImpl(spittleDAOHibernate);
     }
-
 }
+*/

@@ -1,5 +1,6 @@
 package spittr.persistence;
 
+import org.springframework.stereotype.Component;
 import spittr.domain.Spitter;
 
 import org.hibernate.HibernateException;
@@ -7,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-
 
 public class SpitterDAOHibernateImpl implements DAO<Spitter> {
 
@@ -18,12 +18,8 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
 
     public SpitterDAOHibernateImpl (){
 
-        try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Failed to create sessionFactory object." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+
     }
 
     public Spitter create(Spitter spitter) {
@@ -37,7 +33,6 @@ public class SpitterDAOHibernateImpl implements DAO<Spitter> {
         } catch (HibernateException hibernateExceptionEx) {
             transaction.rollback();
             spitter = null;
-            hibernateExceptionEx.printStackTrace();
         } finally {
             session.close();
         }

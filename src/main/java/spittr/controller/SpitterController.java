@@ -42,6 +42,9 @@ public class SpitterController {
         newUser.setLastName(request.getParameter("lastName"));
         newUser.setDescription(request.getParameter("desc"));
         System.out.println(newUser.toString());
+
+
+
         try {
             Spitter tempUser = userService.create(newUser);
 
@@ -49,8 +52,7 @@ public class SpitterController {
                 throw new SQLException();
             }
 
-        } catch (SQLException | ClassNotFoundException  e) {
-            // Redirect to failUser.
+        } catch (SQLException e) {
             return "registerFails";
         }
 

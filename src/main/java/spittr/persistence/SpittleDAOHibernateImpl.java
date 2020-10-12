@@ -1,5 +1,6 @@
 package spittr.persistence;
 
+import org.springframework.stereotype.Component;
 import spittr.domain.Spittle;
 
 import org.hibernate.HibernateException;

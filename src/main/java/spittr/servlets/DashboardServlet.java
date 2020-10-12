@@ -25,8 +25,8 @@ public class DashboardServlet extends HttpServlet {
         super.init();
         //ApplicationContext context = new FileSystemXmlApplicationContext("spring-config.xml");
         //DAO spittleDAOHibernate = (SpittleDAOHibernateImpl) context.getBean("spittleDAOHibernate");
-        SpittleDAOHibernateImpl spittleDAOHibernate = new SpittleDAOHibernateImpl();
-        tweetService = new SpittleServiceImpl((SpittleDAOHibernateImpl) spittleDAOHibernate);
+        //SpittleDAOHibernateImpl spittleDAOHibernate = new SpittleDAOHibernateImpl();
+        tweetService = new SpittleServiceImpl(/*(SpittleDAOHibernateImpl) spittleDAOHibernate*/);
         //tweetService = new SpitterServiceImpl();
     }
 
@@ -38,19 +38,15 @@ public class DashboardServlet extends HttpServlet {
         // Step 2: forward the request and response
 
         List<Spittle> allTweets = new ArrayList<>();
-        try {
 
-            allTweets.add((Spittle) tweetService.read(12L));
-            allTweets.add((Spittle) tweetService.read(13L));
-            allTweets.add((Spittle) tweetService.read(16L));
-            allTweets.add((Spittle) tweetService.read(17L));
+        allTweets.add((Spittle) tweetService.read(12L));
+        allTweets.add((Spittle) tweetService.read(13L));
+        allTweets.add((Spittle) tweetService.read(16L));
+        allTweets.add((Spittle) tweetService.read(17L));
 
-            req.setAttribute("data", allTweets);
+        req.setAttribute("data", allTweets);
 
-        } catch (SQLException | ClassNotFoundException | IllegalAccessException e) {
-            e.printStackTrace();
-            // MUST MODE TO FAIL PAGE.
-        }
+
 
     }
 
