@@ -117,5 +117,14 @@ public class SpitterServiceImpl implements Service<Spitter> {
         }
     }
 
+    public Spitter findByUsername (String username) {
+
+        Spitter user = spitterRepository.findByUsername(username);
+
+        if (user == null){
+            System.err.println("Service violation: User don'e exist.");
+        }
+        return user;
+    }
 
 }

@@ -36,7 +36,7 @@ public interface SpitterRepository extends JpaRepository<Spitter, Long> {
     boolean existsByIdOrEmail(Long id, String email);
 
     //Spitter findById(long id);
-    //Spitter findByUsername(String username);
+    Spitter findByUsername(String username);
    // @Query("select s from Spitter s  where s.email like '%gmail.com'")
     //List<Spitter> findAllByGmail (); // if name is too big "gmail" method.
 

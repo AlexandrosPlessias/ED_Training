@@ -3,28 +3,28 @@ package spittr.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import spittr.domain.Spitter;
 import spittr.domain.Spittle;
 import spittr.services.SpittleServiceImpl;
 
-import javax.xml.ws.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/spittle")
 public class SpittleController {
 
-    private List<Spittle> allTweets;
     private SpittleServiceImpl spittleService;
 
     // Constructor injection of SpittleServiceImpl.
     @Autowired
     public void DashboardController(SpittleServiceImpl spittleService) {
-
         this.spittleService = spittleService;
     }
 
@@ -33,10 +33,11 @@ public class SpittleController {
     HttpServletRequest reads the information provided by the user and pass it to the Model interface. Now, a view page
     easily accesses the data from the model part.
      */
-    @RequestMapping(value="/dashboard", method=RequestMethod.GET)
-    public String dashboard(Model model) {
 
-        allTweets = new ArrayList<>();
+    @RequestMapping(value="/dashboard", method=RequestMethod.GET)
+    public ModelAndView dashboard(Model model) {
+
+        List<Spittle> allTweets = new ArrayList<>();
 
         try {
 
@@ -48,11 +49,12 @@ public class SpittleController {
 
         } catch (SQLException  e) {
             // MUST BE OTHER PAGE...
-            return "registerFails";
+            return  new ModelAndView("registerFails");
         }
 
+        ModelAndView dashView = new ModelAndView("dashboard");
         model.addAttribute("spittleList", allTweets);
-
-        return "dashboard";
+        return dashView;
     }
+
 }
