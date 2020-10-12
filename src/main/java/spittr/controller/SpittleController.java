@@ -34,7 +34,7 @@ public class SpittleController {
     easily accesses the data from the model part.
      */
 
-    @RequestMapping(value="/dashboard", method=RequestMethod.GET)
+    @GetMapping(value="/dashboard")
     public ModelAndView dashboard(Model model) {
 
         List<Spittle> allTweets = new ArrayList<>();

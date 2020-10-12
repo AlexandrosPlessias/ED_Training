@@ -2,10 +2,7 @@ package spittr.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import spittr.domain.Spitter;
 import spittr.services.SpitterServiceImpl;
@@ -26,12 +23,12 @@ public class SpitterController {
         userService = spitterService;
     }
 
-    @RequestMapping(value="/register", method=RequestMethod.GET)
+    @GetMapping(value="/register")
     public ModelAndView showRegistration() {
         return new ModelAndView("registerForm");
     }
 
-    @RequestMapping(value="/register", method=RequestMethod.POST)
+    @PostMapping(value="/register")
     public ModelAndView saveSpitter(Model model, HttpServletRequest request) {
 
         newUser = new Spitter();
@@ -61,14 +58,14 @@ public class SpitterController {
         //return "redirect:/spitter/registerSuccess";
     }
 
-    @RequestMapping(value="/registerFails", method=RequestMethod.GET)
+    @GetMapping(value="/registerFails")
     public ModelAndView showRegistrationFails() {
 
         return new ModelAndView("registerFails");
         //return "registerFails";
     }
 
-    @RequestMapping(value="/registerSuccess", method=RequestMethod.GET)
+    @GetMapping(value="/registerSuccess")
     public ModelAndView showRegistrationSuccess(Model model) {
 
         model.addAttribute("id", newUser.getId());
@@ -82,7 +79,7 @@ public class SpitterController {
         //return "registerSuccess";
     }
 
-    @RequestMapping(value="/{username}", method = RequestMethod.GET)
+    @GetMapping(value="/{username}")
     public ModelAndView showProfile(@PathVariable String username, Model model){
 
         Spitter user = userService.findByUsername(username);

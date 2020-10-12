@@ -3,13 +3,13 @@
 
 <html>
     <head>
-        <title>Recent Spittles</title>
+        <title>All Spittles</title>
 
     </head>
 
     <body>
 
-        <h1>Recent Spittles List:</h1>
+        <h1>All Spittles List:</h1>
 
         <hr>
 
